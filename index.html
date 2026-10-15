@@ -284,6 +284,7 @@ p{margin:0}
 .xp .when{font-family:var(--f-mono);font-size:12px;color:var(--text-faint);letter-spacing:.08em}
 .xp ul{margin:12px 0 0;padding-left:18px;color:var(--text-soft);display:grid;gap:6px;font-size:15.5px;font-weight:300}
 .xp .org{color:var(--blush);font-weight:600}
+.sub-head{margin:34px 0 16px;font:500 12px var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--text-faint)}
 @media (max-width:640px){.xp{grid-template-columns:1fr;gap:6px}}
 
 .certs{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:12px}
@@ -338,7 +339,7 @@ footer{padding-top:28px;color:var(--text-faint);font-size:14px;letter-spacing:.2
     </div>
     <div class="stats">
       <div class="stat"><b data-count="5">5</b><span>certifications</span></div>
-      <div class="stat"><b data-count="3">3</b><span>major projects</span></div>
+      <div class="stat"><b data-count="2">2</b><span>major projects</span></div>
       <div class="stat"><b data-count="25" data-suffix="+">25+</b><span>tools &amp; skills</span></div>
       <div class="stat"><b data-count="2026">2026</b><span>B.Sc. in IT, SEU</span></div>
     </div>
@@ -401,6 +402,8 @@ footer{padding-top:28px;color:var(--text-faint);font-size:14px;letter-spacing:.2
         </ul>
       </div>
     </div>
+    <h3 class="sub-head">Hands-on lab</h3>
+    <div class="projects" id="labList"></div>
   </section>
 
   <section id="certs">
@@ -486,10 +489,14 @@ const PROJECTS = [
       prices: [["Laravel 11", 49.99], ["JS ES6+", 29.99], ["Python DS", 0]],
       features: ["Expert content", "Flexible learning", "Live support", "Certificates", "Hands-on labs", "Regular updates"]
     }
-  },
+  }
+];
+
+// Hands-on training labs (shown under Experience)
+const LABS = [
   {
     title: "Enterprise Switch Security Hardening",
-    tag: "Team project · Cisco Catalyst C9300-48U",
+    tag: "Team training lab · Cisco Catalyst C9300-48U",
     points: [
       "Configured and hardened a physical Cisco Catalyst C9300-48U (IOS-XE 17.15) as a three-member team, across 17 documented lab phases.",
       "Segmented the network into VLANs 10/20/30, isolated 45 unused ports in a shut-down VLAN 999, and enabled inter-VLAN routing with Layer 3 SVIs.",
@@ -604,7 +611,7 @@ function dashHTML(d){
     <div class="sd-card"><h4>Features</h4><div class="sd-feats">${d.features.map(f => `<span>${f}</span>`).join("")}</div></div>
   </aside>`;
 }
-document.getElementById("projectList").innerHTML = PROJECTS.map(p => `
+const cardHTML = p => `
   <article class="panel glow project${p.dashboard ? " has-dash" : ""}">
     <div class="media"${p.media && p.media.ar ? ` style="--ar:${p.media.ar}"` : ""}>${mediaHTML(p)}</div>${p.dashboard ? dashHTML(p.dashboard) : ""}
     <div class="body">
@@ -614,7 +621,9 @@ document.getElementById("projectList").innerHTML = PROJECTS.map(p => `
       <ul class="chips stack">${p.stack.map(s => `<li>${s}</li>`).join("")}</ul>
       <div class="links">${p.github ? linkBtn(p.github, ghIcon, "View on GitHub", "btn-ghost") : (p.soon === "" ? "" : `<span class="soon">${p.soon || "GitHub repo coming soon"}</span>`)}</div>
     </div>
-  </article>`).join("");
+  </article>`;
+document.getElementById("projectList").innerHTML = PROJECTS.map(cardHTML).join("");
+document.getElementById("labList").innerHTML = LABS.map(cardHTML).join("");
 
 // Gallery: crossfade through screenshots, pause on hover, click dots to jump
 document.querySelectorAll(".gallery").forEach(g => {
