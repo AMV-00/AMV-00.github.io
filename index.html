@@ -221,14 +221,29 @@ p{margin:0}
 .sd-flow span{position:relative;display:block;padding:6px 8px 6px 28px;border-radius:8px;background:rgba(255,255,255,.05);font-size:11.5px;color:var(--text-soft);animation:popin .5s cubic-bezier(.2,.9,.25,1.3) both}
 .sd-flow span::before{counter-increment:f;content:counter(f);position:absolute;left:7px;top:50%;transform:translateY(-50%);width:15px;height:15px;border-radius:50%;display:grid;place-items:center;font:600 9.5px var(--f-mono);background:linear-gradient(135deg,#9C84FF,#FF7DB5);color:#fff}
 .sd-flow span:last-child{color:#7CF0B0}
-/* image gallery (crossfade) */
-.gallery{position:absolute;inset:0}
-.gallery img{position:absolute;inset:0;opacity:0;transition:opacity .9s ease,transform .8s cubic-bezier(.2,.8,.2,1)}
-.gallery img.on{opacity:1}
-.gallery .cap{position:absolute;left:12px;bottom:12px;z-index:2;max-width:calc(100% - 90px);font:500 11px var(--f-mono);letter-spacing:.06em;padding:5px 10px;border-radius:999px;background:rgba(20,10,50,.7);color:#fff;border:1px solid rgba(255,194,223,.25);backdrop-filter:blur(6px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.gallery .dots{position:absolute;right:12px;bottom:16px;z-index:2;display:flex;gap:5px}
-.gallery .dots i{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.35);transition:background .3s,transform .3s;cursor:pointer}
-.gallery .dots i.on{background:#FF9BC6;transform:scale(1.3)}
+/* image gallery: main view + thumbnails + lightbox */
+.media.gal-wrap,.project.has-dash .media.gal-wrap{aspect-ratio:auto;overflow:visible;background:none;border:0;box-shadow:none;display:grid;gap:10px}
+.gal-view{position:relative;aspect-ratio:16/9;border-radius:14px;overflow:hidden;background:#120B30;border:1px solid var(--panel-line);box-shadow:0 30px 60px -30px rgba(10,5,40,.8);cursor:zoom-in}
+.gal-view img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0;transition:opacity .5s ease}
+.gal-view img.on{opacity:1}
+.project:hover .gal-wrap img{transform:none}
+.gal-btn{position:absolute;top:50%;z-index:2;width:36px;height:36px;margin-top:-18px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(20,10,50,.6);color:#fff;font-size:18px;line-height:1;cursor:pointer;backdrop-filter:blur(6px);opacity:0;transition:opacity .25s,background .25s}
+.gal-view:hover .gal-btn,.gal-btn:focus-visible{opacity:1}
+.gal-btn:hover{background:rgba(124,92,255,.7)}
+.gal-btn.prev{left:10px}.gal-btn.next{right:10px}
+.gal-count{position:absolute;right:10px;top:10px;z-index:2;font:500 11px var(--f-mono);padding:3px 9px;border-radius:999px;background:rgba(20,10,50,.65);color:var(--text-soft)}
+.gal-thumbs{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
+.gal-thumbs button{padding:0;aspect-ratio:16/9;border-radius:8px;overflow:hidden;border:2px solid transparent;background:#120B30;cursor:pointer;opacity:.55;transition:opacity .25s,border-color .25s,transform .25s}
+.gal-thumbs button:hover{opacity:.9;transform:translateY(-2px)}
+.gal-thumbs button.on{opacity:1;border-color:#FF9BC6}
+.gal-thumbs img{width:100%;height:100%;object-fit:cover;display:block}
+@media (hover:none){.gal-btn{opacity:1}}
+#lb{padding:0;border:0;background:transparent;max-width:min(1200px,94vw);width:100%;overflow:visible}
+#lb::backdrop{background:rgba(8,4,24,.88);backdrop-filter:blur(4px)}
+#lb img{display:block;width:100%;height:auto;max-height:84vh;object-fit:contain;border-radius:12px}
+#lb p{margin:10px 0 0;text-align:center;font:500 13px var(--f-mono);color:var(--text-soft)}
+#lb .gal-btn{opacity:1}#lb .prev{left:-8px}#lb .next{right:-8px}
+#lb .close{position:absolute;top:-14px;right:-14px;z-index:3;width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,.25);background:rgba(20,10,50,.8);color:#fff;font-size:18px;cursor:pointer}
 /* checklist dashboard */
 .sd-checks{display:grid;gap:6px}
 .sd-check{display:grid;grid-template-columns:18px 1fr auto;align-items:center;gap:8px;padding:6px 8px;border-radius:8px;background:rgba(255,255,255,.04);font-size:12px;color:var(--text-soft);animation:slidein .5s cubic-bezier(.2,.8,.2,1) both}
@@ -572,7 +587,7 @@ const demos = {
 };
 function mediaHTML(p){
   if (p.media && p.media.type === "video") return `<video src="${p.media.src}"${p.media.poster ? ` poster="${p.media.poster}"` : ""} autoplay muted loop playsinline></video>`;
-  if (p.media && p.media.type === "gallery") return `<div class="gallery">${p.media.items.map((it, i) => `<img src="${it[0]}" alt="${it[1]}" data-cap="${it[1]}"${i ? ' loading="lazy"' : ' class="on"'}>`).join("")}<span class="dots">${p.media.items.map((_, i) => `<i${i ? "" : ' class="on"'}></i>`).join("")}</span></div>`;
+  if (p.media && p.media.type === "gallery") return `<div class="gal-view" role="button" tabindex="0" aria-label="Open image">${p.media.items.map((it, i) => `<img src="${it[0]}" alt="${it[1]}"${i ? ' loading="lazy"' : ' class="on"'}>`).join("")}<button class="gal-btn prev" aria-label="Previous image">‹</button><button class="gal-btn next" aria-label="Next image">›</button><span class="gal-count">1 / ${p.media.items.length}</span></div><div class="gal-thumbs">${p.media.items.map((it, i) => `<button${i ? "" : ' class="on"'} aria-label="${it[1]}"><img src="${it[0]}" alt="" loading="lazy"></button>`).join("")}</div>`;
   if (p.media && p.media.type === "image") return `<img src="${p.media.src}" alt="${p.title} screenshot" loading="lazy">`;
   return (demos[p.visual] || "") + '<span class="badge">PREVIEW</span>';
 }
@@ -613,7 +628,7 @@ function dashHTML(d){
 }
 const cardHTML = p => `
   <article class="panel glow project${p.dashboard ? " has-dash" : ""}">
-    <div class="media"${p.media && p.media.ar ? ` style="--ar:${p.media.ar}"` : ""}>${mediaHTML(p)}</div>${p.dashboard ? dashHTML(p.dashboard) : ""}
+    <div class="media${p.media && p.media.type === "gallery" ? " gal-wrap" : ""}"${p.media && p.media.ar ? ` style="--ar:${p.media.ar}"` : ""}>${mediaHTML(p)}</div>${p.dashboard ? dashHTML(p.dashboard) : ""}
     <div class="body">
       <div class="tag">${p.tag}</div>
       <h3>${p.title}</h3>
@@ -625,15 +640,27 @@ const cardHTML = p => `
 document.getElementById("projectList").innerHTML = PROJECTS.map(cardHTML).join("");
 document.getElementById("labList").innerHTML = LABS.map(cardHTML).join("");
 
-// Gallery: crossfade through screenshots, pause on hover, click dots to jump
-document.querySelectorAll(".gallery").forEach(g => {
-  const imgs = [...g.querySelectorAll("img")], dots = [...g.querySelectorAll(".dots i")];
-  let i = 0, paused = false;
-  const show = n => { imgs[i].classList.remove("on"); dots[i].classList.remove("on"); i = (n + imgs.length) % imgs.length; imgs[i].classList.add("on"); dots[i].classList.add("on"); };
-  dots.forEach((d, n) => d.addEventListener("click", () => show(n)));
-  g.addEventListener("mouseenter", () => paused = true);
-  g.addEventListener("mouseleave", () => paused = false);
-  if (!reduce) setInterval(() => { if (!paused) show(i + 1); }, 3500);
+// Gallery: arrows + thumbnails, click the image for a full-size view
+const lb = document.createElement("dialog"); lb.id = "lb";
+lb.innerHTML = '<button class="close" aria-label="Close">×</button><img alt=""><button class="gal-btn prev" aria-label="Previous image">‹</button><button class="gal-btn next" aria-label="Next image">›</button><p></p>';
+document.body.appendChild(lb);
+let lbStep = null;
+lb.querySelector(".close").onclick = () => lb.close();
+lb.addEventListener("click", e => { if (e.target === lb) lb.close(); });
+lb.querySelector(".prev").onclick = () => lbStep && lbStep(-1);
+lb.querySelector(".next").onclick = () => lbStep && lbStep(1);
+lb.addEventListener("keydown", e => { if (e.key === "ArrowLeft") lbStep(-1); if (e.key === "ArrowRight") lbStep(1); });
+document.querySelectorAll(".gal-wrap").forEach(g => {
+  const view = g.querySelector(".gal-view"), imgs = [...view.querySelectorAll("img")], thumbs = [...g.querySelectorAll(".gal-thumbs button")], count = g.querySelector(".gal-count");
+  let i = 0;
+  const fill = () => { lb.querySelector("img").src = imgs[i].src; lb.querySelector("img").alt = imgs[i].alt; lb.querySelector("p").textContent = imgs[i].alt; };
+  const show = n => { imgs[i].classList.remove("on"); thumbs[i].classList.remove("on"); i = (n + imgs.length) % imgs.length; imgs[i].classList.add("on"); thumbs[i].classList.add("on"); count.textContent = `${i + 1} / ${imgs.length}`; if (lb.open) fill(); };
+  thumbs.forEach((t, n) => t.addEventListener("click", () => show(n)));
+  view.querySelector(".prev").addEventListener("click", e => { e.stopPropagation(); show(i - 1); });
+  view.querySelector(".next").addEventListener("click", e => { e.stopPropagation(); show(i + 1); });
+  const open = () => { lbStep = d => show(i + d); fill(); lb.showModal(); };
+  view.addEventListener("click", open);
+  view.addEventListener("keydown", e => { if (e.key === "Enter") open(); if (e.key === "ArrowLeft") show(i - 1); if (e.key === "ArrowRight") show(i + 1); });
 });
 
 // Copy email
