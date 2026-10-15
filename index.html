@@ -78,9 +78,10 @@ h1{font-family:var(--f-display);font-weight:800;font-size:clamp(72px,21vw,220px)
 h1 .ch{display:inline-block;
   background:linear-gradient(100deg,#FFFFFF 0%,var(--blush) 30%,var(--glow-pink) 50%,var(--glow-violet) 70%,#FFFFFF 100%);background-size:300% 100%;
   -webkit-background-clip:text;background-clip:text;color:transparent;
-  animation:drop .9s cubic-bezier(.2,.9,.25,1.2) both, shimmer 6s linear infinite;
-  transition:transform .25s ease}
-h1 .ch:hover{transform:translateY(-14px) rotate(-4deg)}
+  animation:drop .9s cubic-bezier(.2,.9,.25,1.2) backwards, shimmer 6s linear infinite;
+  transition:transform .6s cubic-bezier(.2,.8,.2,1),filter .6s ease}
+h1:hover .ch{filter:drop-shadow(0 10px 28px rgba(255,125,181,.45))}
+h1 .ch:hover{transform:translateY(-6px);filter:drop-shadow(0 14px 30px rgba(255,125,181,.8))}
 h1 .ch:nth-child(1){animation-delay:.15s,0s}h1 .ch:nth-child(2){animation-delay:.25s,0s}h1 .ch:nth-child(3){animation-delay:.35s,0s}h1 .ch:nth-child(4){animation-delay:.45s,0s}h1 .ch:nth-child(5){animation-delay:.55s,0s}
 @keyframes drop{from{transform:translateY(60%) rotate(8deg);opacity:0;filter:blur(8px)}to{transform:none;opacity:1;filter:none}}
 @keyframes shimmer{to{background-position:-300% 0}}
