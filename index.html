@@ -162,6 +162,52 @@ p{margin:0}
 .media .badge{position:absolute;bottom:12px;right:12px;z-index:2;font-family:var(--f-mono);font-size:11px;letter-spacing:.1em;padding:4px 10px;border-radius:999px;background:rgba(20,10,50,.6);color:var(--blush);border:1px solid rgba(255,194,223,.3);backdrop-filter:blur(6px)}
 .media .badge::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:#7CF0B0;margin-right:6px;vertical-align:1px;animation:pulse2 1.6s infinite}
 .demo{position:absolute;inset:0;transition:transform .8s cubic-bezier(.2,.8,.2,1)}
+/* project with video + stats dashboard */
+.project.has-dash{grid-template-columns:1.45fr 1fr;grid-template-areas:"media dash" "body body";align-items:stretch;gap:22px}
+.project.has-dash .media{grid-area:media;order:0;aspect-ratio:1910/890;align-self:center}
+.project.has-dash .stats-dash{grid-area:dash}
+.project.has-dash .body{grid-area:body}
+.project.has-dash .body ul:not(.chips){grid-template-columns:repeat(auto-fit,minmax(240px,1fr));column-gap:28px}
+@media (max-width:900px){.project.has-dash{grid-template-columns:1fr;grid-template-areas:"media" "dash" "body"}}
+.stats-dash{display:grid;gap:12px;align-content:start;padding:16px;border-radius:14px;background:linear-gradient(160deg,rgba(30,21,72,.85),rgba(42,27,92,.85));border:1px solid var(--panel-line);min-width:0}
+.sd-head{display:flex;justify-content:space-between;align-items:center;gap:8px;font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-faint)}
+.sd-head b{color:var(--text);font-weight:500}
+.sd-head .live{display:inline-flex;align-items:center;gap:6px;color:#7CF0B0}
+.sd-head .live::before{content:"";width:7px;height:7px;border-radius:50%;background:#7CF0B0;animation:pulse2 1.6s infinite}
+.sd-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.sd-kpi{padding:10px 8px;border-radius:10px;background:rgba(255,255,255,.06);text-align:center;transition:transform .3s ease,background .3s}
+.sd-kpi:hover{transform:translateY(-3px);background:rgba(255,194,223,.12)}
+.sd-kpi strong{display:block;font-family:var(--f-display);font-size:clamp(22px,2.6vw,30px);line-height:1;color:#fff;font-variant-numeric:lining-nums tabular-nums}
+.sd-kpi small{display:block;margin-top:4px;font-size:10.5px;color:var(--text-faint);font-family:var(--f-mono)}
+.sd-row{display:grid;grid-template-columns:1.4fr 1fr;gap:10px}
+.sd-card{padding:12px;border-radius:10px;background:rgba(255,255,255,.05);min-width:0}
+.sd-card h4{margin:0 0 10px;font:500 10.5px var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--text-faint)}
+.sd-bars{display:grid;gap:9px}
+.sd-bar{display:grid;grid-template-columns:62px 1fr auto;align-items:center;gap:8px;font-size:12px}
+.sd-bar span:first-child{color:var(--text-soft);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sd-bar .track2{height:9px;border-radius:5px;background:rgba(255,255,255,.08);overflow:hidden}
+.sd-bar .fill{height:100%;width:var(--w);border-radius:5px;background:linear-gradient(90deg,#9C84FF,#FF7DB5);transform-origin:left;animation:fillx 1.4s cubic-bezier(.2,.8,.2,1) both}
+.sd-bar .fill.free{background:linear-gradient(90deg,#4BD69A,#7CF0B0);min-width:6px}
+.sd-bar em{font-style:normal;font-family:var(--f-mono);font-size:11px;color:var(--blush);font-variant-numeric:tabular-nums}
+@keyframes fillx{from{transform:scaleX(0)}}
+.sd-donut{display:grid;justify-items:center;gap:8px}
+.sd-donut svg{width:96px;height:96px;transform:rotate(-90deg)}
+.sd-donut circle{fill:none;stroke-width:12}
+.sd-donut .bg{stroke:rgba(255,255,255,.08)}
+.sd-donut .paid{stroke:url(#dg);stroke-dasharray:157.08 251.33;animation:dash 1.6s cubic-bezier(.2,.8,.2,1) both}
+.sd-donut .freeArc{stroke:#7CF0B0;stroke-dasharray:78.54 251.33;stroke-dashoffset:-162;animation:dash2 1.6s .3s cubic-bezier(.2,.8,.2,1) both}
+@keyframes dash{from{stroke-dasharray:0 251.33}}
+@keyframes dash2{from{stroke-dasharray:0 251.33}}
+.sd-legend{display:flex;gap:10px;font-size:11px;color:var(--text-soft)}
+.sd-legend i{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:4px;background:linear-gradient(90deg,#9C84FF,#FF7DB5)}
+.sd-legend i.g{background:#7CF0B0}
+.sd-feats{display:flex;flex-wrap:wrap;gap:6px}
+.sd-feats span{font-size:11.5px;padding:4px 9px;border-radius:999px;background:rgba(255,255,255,.07);color:var(--text-soft);animation:popin .5s cubic-bezier(.2,.9,.25,1.3) both}
+.sd-feats span:nth-child(2){animation-delay:.08s}.sd-feats span:nth-child(3){animation-delay:.16s}.sd-feats span:nth-child(4){animation-delay:.24s}.sd-feats span:nth-child(5){animation-delay:.32s}.sd-feats span:nth-child(6){animation-delay:.4s}
+@keyframes popin{from{transform:scale(.6);opacity:0}}
+/* wait to animate until visible */
+.stats-dash:not(.play) *{animation-play-state:paused!important}
+@media (max-width:440px){.sd-kpis{grid-template-columns:repeat(2,1fr)}.sd-row{grid-template-columns:1fr}}
 /* dashboard demo */
 .dash{display:grid;grid-template-rows:26px 1fr;background:linear-gradient(160deg,#1E1548,#2A1B5C)}
 .dash .bar{display:flex;align-items:center;gap:6px;padding:0 12px;background:rgba(255,255,255,.06)}
@@ -373,8 +419,15 @@ const PROJECTS = [
     ],
     stack: ["Laravel", "PHP", "MySQL", "MVC", "HTML/CSS"],
     github: "https://github.com/AMV-00/SchoolOnlineProject-Final",
-    visual: "dashboard",   // animated preview shown until you add real media
-    media: null            // e.g. { type: "image", src: "media/proskill.png" } or { type: "video", src: "media/proskill.mp4" }
+    visual: "dashboard",   // animated preview shown when there's no media
+    media: { type: "video", src: "media/proskill.mp4", poster: "media/proskill-poster.jpg" },
+    // Stats beside the video, taken from the app itself (course catalog, sign-up form, features page)
+    dashboard: {
+      title: "Platform overview",
+      kpis: [["3", "Courses"], ["2", "User roles"], ["2", "Languages"], ["6", "Features"]],
+      prices: [["Laravel 11", 49.99], ["JS ES6+", 29.99], ["Python DS", 0]],
+      features: ["Expert content", "Flexible learning", "Live support", "Certificates", "Hands-on labs", "Regular updates"]
+    }
   },
   {
     title: "Enterprise Switch Security Hardening",
@@ -429,13 +482,29 @@ const demos = {
   </svg></div>`
 };
 function mediaHTML(p){
-  if (p.media && p.media.type === "video") return `<video src="${p.media.src}" autoplay muted loop playsinline></video>`;
+  if (p.media && p.media.type === "video") return `<video src="${p.media.src}"${p.media.poster ? ` poster="${p.media.poster}"` : ""} autoplay muted loop playsinline></video>`;
   if (p.media && p.media.type === "image") return `<img src="${p.media.src}" alt="${p.title} screenshot" loading="lazy">`;
   return (demos[p.visual] || "") + '<span class="badge">PREVIEW</span>';
 }
+function dashHTML(d){
+  const max = Math.max(...d.prices.map(x => x[1]));
+  const paid = d.prices.filter(x => x[1] > 0).length, total = d.prices.length, C = 251.33;
+  return `<aside class="stats-dash" aria-label="${d.title}">
+    <div class="sd-head"><b>${d.title}</b><span class="live">From the app</span></div>
+    <div class="sd-kpis">${d.kpis.map(k => `<div class="sd-kpi"><strong data-count="${k[0]}">${k[0]}</strong><small>${k[1]}</small></div>`).join("")}</div>
+    <div class="sd-row">
+      <div class="sd-card"><h4>Course price (SAR)</h4><div class="sd-bars">${d.prices.map((c, i) => `<div class="sd-bar"><span>${c[0]}</span><div class="track2"><div class="fill${c[1] ? "" : " free"}" style="--w:${c[1] ? Math.round(c[1] / max * 100) : 4}%;animation-delay:${i * .15}s"></div></div><em>${c[1] ? c[1].toFixed(2) : "Free"}</em></div>`).join("")}</div></div>
+      <div class="sd-card sd-donut"><h4>Paid vs free</h4>
+        <svg viewBox="0 0 100 100"><defs><linearGradient id="dg"><stop offset="0" stop-color="#9C84FF"/><stop offset="1" stop-color="#FF7DB5"/></linearGradient></defs>
+        <circle class="bg" cx="50" cy="50" r="40"/><circle class="paid" cx="50" cy="50" r="40" style="stroke-dasharray:${(C * paid / total - 4).toFixed(2)} ${C}"/><circle class="freeArc" cx="50" cy="50" r="40" style="stroke-dasharray:${(C * (total - paid) / total - 4).toFixed(2)} ${C};stroke-dashoffset:${-(C * paid / total).toFixed(2)}"/></svg>
+        <div class="sd-legend"><span><i></i>${paid} paid</span><span><i class="g"></i>${total - paid} free</span></div></div>
+    </div>
+    <div class="sd-card"><h4>Features</h4><div class="sd-feats">${d.features.map(f => `<span>${f}</span>`).join("")}</div></div>
+  </aside>`;
+}
 document.getElementById("projectList").innerHTML = PROJECTS.map(p => `
-  <article class="panel glow project">
-    <div class="media">${mediaHTML(p)}</div>
+  <article class="panel glow project${p.dashboard ? " has-dash" : ""}">
+    <div class="media">${mediaHTML(p)}</div>${p.dashboard ? dashHTML(p.dashboard) : ""}
     <div class="body">
       <div class="tag">${p.tag}</div>
       <h3>${p.title}</h3>
@@ -485,7 +554,14 @@ function countUp(el){
   (function f(t){ const k = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - k, 3);
     el.textContent = Math.round(start + (end - start) * e) + suf; if (k < 1) requestAnimationFrame(f); })(t0);
 }
-if (!reduce) document.querySelectorAll("[data-count]").forEach(el => setTimeout(() => countUp(el), 900));
+if (!reduce) document.querySelectorAll(".stats [data-count]").forEach(el => setTimeout(() => countUp(el), 900));
+// Dashboard: play its animations and counters when it scrolls into view
+document.querySelectorAll(".stats-dash").forEach(d => {
+  const go = () => { d.classList.add("play"); if (!reduce) d.querySelectorAll("[data-count]").forEach(countUp); };
+  if (!("IntersectionObserver" in window)) return go();
+  const o = new IntersectionObserver(es => { if (es[0].isIntersecting) { go(); o.disconnect(); } }, {threshold:.3});
+  o.observe(d);
+});
 
 // Reveal off-screen blocks as they scroll in (on-screen content stays visible at load)
 if (!reduce && "IntersectionObserver" in window) {
