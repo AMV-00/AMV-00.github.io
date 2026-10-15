@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Ahlam · Portfolio</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<meta name="description" content="Ahlam: Information Technology graduate working across software, networking, cybersecurity and AI.">
+<meta name="description" content="Ahlam: IT and cybersecurity, focused on network defense, systems administration and secure web development.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
@@ -182,7 +182,7 @@ p{margin:0}
 .mail{display:flex;flex-wrap:wrap;align-items:center;gap:12px}
 .mail code{font-family:var(--f-mono);font-size:clamp(15px,2.4vw,20px);color:var(--text);user-select:all;word-break:break-all}
 .copied{font-size:14px;color:var(--blush)}
-footer{padding-top:28px;color:var(--text-faint);font-size:13px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+footer{padding-top:28px;color:var(--text-faint);font-size:14px;letter-spacing:.2em;display:flex;justify-content:center;text-align:center}
 
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
@@ -213,8 +213,8 @@ footer{padding-top:28px;color:var(--text-faint);font-size:13px;display:flex;just
     <p class="prompt">ahlam@portfolio<i>:~$</i> <span id="typed"></span><span class="caret"></span></p>
     <p class="hello">Hi, I'm</p>
     <h1 aria-label="AHLAM"><span class="ch">A</span><span class="ch">H</span><span class="ch">L</span><span class="ch">A</span><span class="ch">M</span></h1>
-    <p class="role">Information Technology <span class="rot" id="rot">AI &amp; Digital Technologies</span></p>
-    <p class="lede">IT graduate from Saudi Electronic University. I build web apps, configure and secure networks, run Windows and Linux servers, and I'm growing into AI, Python and the cloud.</p>
+    <p class="role">IT &amp; Cybersecurity <span class="rot" id="rot">Network Defense</span></p>
+    <p class="lede">I secure networks and the systems that run on them. I harden switches, segment traffic, lock down access and keep Windows and Linux servers running cleanly, and I build web apps with security in mind. Right now I'm sharpening my incident response skills and growing into cloud and AI.</p>
     <div class="cta" id="heroLinks">
       <a class="btn btn-solid" href="#projects">View projects</a>
       <a class="btn btn-ghost" href="#contact">Get in touch</a>
@@ -223,7 +223,7 @@ footer{padding-top:28px;color:var(--text-faint);font-size:13px;display:flex;just
       <div class="stat"><b data-count="5">5</b><span>certifications</span></div>
       <div class="stat"><b data-count="2">2</b><span>major projects</span></div>
       <div class="stat"><b data-count="25" data-suffix="+">25+</b><span>tools &amp; skills</span></div>
-      <div class="stat"><b data-count="2026">2026</b><span>B.Sc. graduate</span></div>
+      <div class="stat"><b data-count="2026">2026</b><span>B.Sc. in IT, SEU</span></div>
     </div>
   </header>
 </div>
@@ -240,8 +240,8 @@ footer{padding-top:28px;color:var(--text-faint);font-size:13px;display:flex;just
     <div class="sec-head"><code>01</code><h2>About me</h2></div>
     <div class="about">
       <div class="panel glow">
-        <p>I'm an Information Technology graduate with hands-on experience across software development, networking, systems administration and cybersecurity.</p>
-        <p>Through technical projects and cooperative training I've built a full-stack e-learning platform, hardened enterprise Cisco switches, and run virtualized Windows Server and Ubuntu labs. I like solving problems, writing clear technical documentation, and learning something new every week.</p>
+        <p>I work where networks and security meet. My strongest ground is network defense: VLAN segmentation, ACLs, SSH hardening and Layer 2 protections on real Cisco Catalyst hardware, backed by training in incident response and intrusion detection.</p>
+        <p>I also run the systems behind the network. I've built Active Directory domains, managed Ubuntu servers from the command line, automated admin work with PowerShell, and shipped a full-stack Laravel platform with role-based access. I document everything I build, and I enjoy tracking down why something broke.</p>
       </div>
       <dl class="panel glow facts">
         <div class="fact"><dt>Degree</dt><dd>B.Sc. Information Technology, 2026</dd></div>
@@ -301,7 +301,7 @@ footer{padding-top:28px;color:var(--text-faint);font-size:13px;display:flex;just
     <div class="panel glow contact">
       <code style="font-family:var(--f-mono);font-size:13px;color:var(--blush)">06 · contact</code>
       <h2>Let's work together</h2>
-      <p style="color:var(--text-soft);max-width:52ch;font-weight:300">Open to IT, networking, cybersecurity and junior developer roles. The fastest way to reach me is email.</p>
+      <p style="color:var(--text-soft);max-width:52ch;font-weight:300">Open to cybersecurity, network and IT infrastructure roles. The fastest way to reach me is email.</p>
       <div class="mail">
         <code id="email">ahlam.u369@gmail.com</code>
         <button class="btn btn-ghost" id="copyBtn" type="button">Copy email</button>
@@ -309,7 +309,7 @@ footer{padding-top:28px;color:var(--text-faint);font-size:13px;display:flex;just
       </div>
       <div class="cta" id="socialLinks" style="animation:none"></div>
     </div>
-    <footer><span>© 2026 Ahlam</span><span style="font-family:var(--f-mono)">built with HTML, CSS &amp; JS</span></footer>
+    <footer><span>© 2026 AHLAM</span></footer>
   </section>
 </div>
 
@@ -383,7 +383,7 @@ document.getElementById("copyBtn").addEventListener("click", () => {
 
 // Typing terminal + rotating role
 const cmds = ["whoami", "cat skills.txt", "ping opportunities", "sudo hire ahlam"];
-const roles = ["AI & Digital Technologies", "Networking & Security", "Web Development", "Cloud & Systems"];
+const roles = ["Network Defense", "Incident Response", "Systems Administration", "Secure Web Development", "Cloud & AI"];
 const typed = document.getElementById("typed"), rot = document.getElementById("rot");
 if (reduce) { typed.textContent = cmds[0]; }
 else {
