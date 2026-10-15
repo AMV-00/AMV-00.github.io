@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ahlam · Portfolio</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Ahlam — Information Technology graduate working across software, networking, cybersecurity and AI.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one long violet "aurora" sheet; glowing hero, then glass panels stacked in a single 980px column. */
+:root{
+  color-scheme: dark;
+  --ink-deep:#2A1D5C;      /* base violet */
+  --ink-mid:#5B3C8F;       /* gradient middle */
+  --ink-plum:#7A3E7E;      /* gradient end */
+  --glow-violet:#9C84FF;
+  --glow-pink:#FF7DB5;
+  --text:#F7F3FF;
+  --text-soft:#DCD3F5;
+  --text-faint:#B7A9DE;
+  --blush:#FFC2DF;
+  --panel:rgba(255,255,255,.08);
+  --panel-line:rgba(255,255,255,.16);
+  --chip:rgba(255,255,255,.12);
+  --f-display:"Unbounded","Manrope",system-ui,sans-serif;
+  --f-body:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;font-family:var(--f-body);font-size:16px;line-height:1.65;color:var(--text);
+  background:linear-gradient(160deg,var(--ink-deep) 0%,var(--ink-mid) 45%,var(--ink-plum) 100%) fixed;
+  background-color:var(--ink-deep);
+  overflow-x:hidden;
+}
+.aurora{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.aurora span{position:absolute;border-radius:50%;filter:blur(90px);opacity:.55}
+.aurora .a1{width:520px;height:520px;background:var(--glow-violet);top:-180px;right:-140px;animation:drift 18s ease-in-out infinite alternate}
+.aurora .a2{width:440px;height:440px;background:var(--glow-pink);top:40%;left:-200px;opacity:.4;animation:drift 22s ease-in-out infinite alternate-reverse}
+@keyframes drift{to{transform:translate(-40px,60px) scale(1.08)}}
+@media (prefers-reduced-motion:reduce){.aurora span{animation:none}html{scroll-behavior:auto}}
+
+.wrap{position:relative;z-index:1;max-width:980px;margin:0 auto;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 48px}
+
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;display:flex;justify-content:space-between;align-items:center;gap:16px;
+  padding-block:14px;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.logo{font-family:var(--f-display);font-weight:700;font-size:18px;color:var(--text);text-decoration:none;letter-spacing:.02em}
+.logo b{color:var(--blush)}
+nav ul{display:flex;gap:20px;list-style:none;margin:0;padding:0;font-size:14px}
+nav a{color:var(--text-soft);text-decoration:none}
+nav a:hover,nav a:focus-visible{color:var(--text)}
+@media (max-width:640px){nav ul{display:none}}
+
+a:focus-visible,button:focus-visible{outline:2px solid var(--blush);outline-offset:3px;border-radius:6px}
+
+/* Hero */
+.hero{padding-block:72px 64px}
+.prompt{font-family:var(--f-mono);font-size:13px;color:var(--blush);margin:0 0 18px}
+.prompt i{font-style:normal;color:var(--text-faint)}
+.caret{display:inline-block;width:8px;height:15px;background:var(--blush);vertical-align:-2px;margin-left:4px;animation:blink 1.1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+@media (prefers-reduced-motion:reduce){.caret{animation:none}}
+.hello{font-family:var(--f-mono);font-size:13px;letter-spacing:.3em;text-transform:uppercase;color:var(--text-soft);margin:0}
+h1{font-family:var(--f-display);font-weight:800;font-size:clamp(64px,15vw,148px);line-height:.95;margin:.08em 0 .15em;letter-spacing:-.02em;
+  background:linear-gradient(95deg,#FFFFFF 10%,var(--blush) 60%,#FFA6CF 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.role{font-size:clamp(17px,2.4vw,21px);font-weight:600;margin:0;color:var(--text)}
+.role span{color:var(--text-faint);font-weight:500}
+.lede{max-width:58ch;color:var(--text-soft);margin:18px 0 30px}
+.cta{display:flex;flex-wrap:wrap;gap:12px}
+.btn{display:inline-flex;align-items:center;gap:8px;font:600 14px var(--f-body);padding:11px 20px;border-radius:999px;text-decoration:none;cursor:pointer;border:1px solid transparent;transition:transform .15s ease,background .15s ease}
+.btn:hover{transform:translateY(-2px)}
+.btn-solid{background:var(--text);color:var(--ink-deep)}
+.btn-ghost{background:transparent;color:var(--text);border-color:var(--panel-line)}
+.btn-ghost:hover{background:var(--chip)}
+
+/* Sections */
+section{padding-block:40px}
+.sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:22px}
+.sec-head code{font-family:var(--f-mono);font-size:12px;color:var(--blush);opacity:.85}
+h2{font-family:var(--f-display);font-weight:700;font-size:clamp(24px,3.6vw,32px);margin:0;letter-spacing:-.01em;text-wrap:balance}
+h3{font-size:18px;margin:0;font-weight:700;text-wrap:balance}
+.panel{background:var(--panel);border:1px solid var(--panel-line);border-radius:18px;padding:24px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+p{margin:0}
+
+.about{display:grid;grid-template-columns:1.6fr 1fr;gap:20px}
+.about .panel p+p{margin-top:12px}
+.facts{display:grid;gap:14px;align-content:start}
+.fact{display:grid;gap:2px}
+.fact dt{font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-faint)}
+.fact dd{margin:0;font-weight:600}
+@media (max-width:760px){.about{grid-template-columns:1fr}}
+
+/* Skills */
+.skills{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:16px}
+.skill h3{font-size:15px;margin-bottom:12px;color:var(--blush)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;list-style:none;margin:0;padding:0}
+.chips li{font-size:13px;padding:5px 11px;border-radius:999px;background:var(--chip);color:var(--text)}
+
+/* Projects */
+.projects{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}
+.project{display:flex;flex-direction:column;gap:14px;min-width:0}
+.project .tag{font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-faint)}
+.project ul{margin:0;padding-left:18px;color:var(--text-soft);font-size:14.5px;display:grid;gap:6px}
+.project .stack{margin-top:auto}
+.project .stack li{font-family:var(--f-mono);font-size:12px}
+.project .links{display:flex;gap:10px;flex-wrap:wrap}
+.soon{font-family:var(--f-mono);font-size:12px;color:var(--text-faint);border:1px dashed var(--panel-line);border-radius:999px;padding:6px 12px}
+.project.placeholder{border-style:dashed;background:transparent;justify-content:center;align-items:flex-start;color:var(--text-faint)}
+
+/* Experience */
+.xp{display:grid;grid-template-columns:200px 1fr;gap:24px}
+.xp .when{font-family:var(--f-mono);font-size:12px;color:var(--text-faint);letter-spacing:.06em}
+.xp ul{margin:10px 0 0;padding-left:18px;color:var(--text-soft);display:grid;gap:6px;font-size:15px}
+.xp .org{color:var(--blush);font-weight:600}
+@media (max-width:640px){.xp{grid-template-columns:1fr;gap:6px}}
+
+/* Certs */
+.certs{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
+.cert{display:grid;grid-template-columns:1fr auto;gap:4px 12px;align-items:baseline;padding:16px 18px;border-radius:14px;background:var(--panel);border:1px solid var(--panel-line)}
+.cert b{font-weight:600;font-size:15px}
+.cert time{font-family:var(--f-mono);font-size:12px;color:var(--text-faint);font-variant-numeric:tabular-nums;white-space:nowrap}
+.cert span{grid-column:1/-1;color:var(--text-faint);font-size:13px}
+
+/* Contact */
+.contact{text-align:left;display:grid;gap:18px;padding:36px}
+.contact h2{font-size:clamp(28px,5vw,44px)}
+.mail{display:flex;flex-wrap:wrap;align-items:center;gap:12px}
+.mail code{font-family:var(--f-mono);font-size:clamp(15px,2.4vw,19px);color:var(--text);user-select:all;word-break:break-all}
+.copied{font-size:13px;color:var(--blush)}
+footer{padding-top:28px;color:var(--text-faint);font-size:13px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+</style>
+</head>
+<body>
+
+<div class="aurora" aria-hidden="true"><span class="a1"></span><span class="a2"></span></div>
+
+<div class="wrap">
+  <nav>
+    <a class="logo" href="#top">ahlam<b>.</b></a>
+    <ul>
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <header class="hero" id="top">
+    <p class="prompt">ahlam@portfolio<i>:~$</i> whoami<span class="caret"></span></p>
+    <p class="hello">Hi, I'm</p>
+    <h1>Ahlam</h1>
+    <p class="role">Information Technology <span>· AI &amp; Digital Technologies</span></p>
+    <p class="lede">IT graduate from Saudi Electronic University. I build web apps, configure and secure networks, run Windows and Linux servers, and I'm growing into AI, Python and the cloud.</p>
+    <div class="cta" id="heroLinks">
+      <a class="btn btn-solid" href="#projects">View projects</a>
+      <a class="btn btn-ghost" href="#contact">Get in touch</a>
+    </div>
+  </header>
+
+  <section id="about">
+    <div class="sec-head"><code>01</code><h2>About me</h2></div>
+    <div class="about">
+      <div class="panel">
+        <p>I'm an Information Technology graduate with hands-on experience across software development, networking, systems administration and cybersecurity.</p>
+        <p>Through technical projects and cooperative training I've built a full-stack e-learning platform, hardened enterprise Cisco switches, and run virtualized Windows Server and Ubuntu labs. I like solving problems, writing clear technical documentation, and learning something new every week.</p>
+      </div>
+      <dl class="panel facts">
+        <div class="fact"><dt>Degree</dt><dd>B.Sc. Information Technology, 2026</dd></div>
+        <div class="fact"><dt>University</dt><dd>Saudi Electronic University</dd></div>
+        <div class="fact"><dt>Based in</dt><dd>Saudi Arabia</dd></div>
+        <div class="fact"><dt>Languages</dt><dd>Arabic (native) · English (good)</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="sec-head"><code>02</code><h2>Skills</h2></div>
+    <div class="skills">
+      <div class="panel skill"><h3>Programming &amp; Development</h3><ul class="chips"><li>Python</li><li>Laravel (PHP)</li><li>HTML</li><li>CSS</li><li>MVC Architecture</li><li>PowerShell</li></ul></div>
+      <div class="panel skill"><h3>Databases</h3><ul class="chips"><li>MySQL</li><li>SQL</li><li>Oracle Fundamentals</li></ul></div>
+      <div class="panel skill"><h3>AI &amp; Cloud</h3><ul class="chips"><li>AI Fundamentals</li><li>AWS Cloud</li><li>AWS AI Practitioner path</li></ul></div>
+      <div class="panel skill"><h3>IT Infrastructure</h3><ul class="chips"><li>Windows Server</li><li>Active Directory</li><li>DNS</li><li>Ubuntu Linux</li><li>VMware</li><li>VirtualBox</li></ul></div>
+      <div class="panel skill"><h3>Networking &amp; Security</h3><ul class="chips"><li>TCP/IP</li><li>IPv4/IPv6 Subnetting</li><li>VLANs</li><li>Routing &amp; Switching</li><li>NAT</li><li>Firewalls</li><li>IDS/IPS</li><li>Switch Hardening</li></ul></div>
+      <div class="panel skill"><h3>Tools</h3><ul class="chips"><li>Cisco Packet Tracer</li><li>Microsoft Office</li></ul></div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="sec-head"><code>03</code><h2>Projects</h2></div>
+    <div class="projects" id="projectList"></div>
+  </section>
+
+  <section id="experience">
+    <div class="sec-head"><code>04</code><h2>Experience</h2></div>
+    <div class="panel xp">
+      <div class="when">COOPERATIVE TRAINING</div>
+      <div>
+        <h3>IT &amp; Cybersecurity Trainee</h3>
+        <div class="org">Al Madinah Region Development Authority</div>
+        <ul>
+          <li>Built a virtualized lab with a Windows Server 2016 domain controller, a Windows 10 client and an Ubuntu server.</li>
+          <li>Configured Active Directory users, groups and Group Policy, DNS, and secure file sharing with NTFS and share permissions.</li>
+          <li>Automated admin and system-check tasks with PowerShell, and managed Ubuntu servers from the command line.</li>
+          <li>Designed and troubleshot networks in Packet Tracer: VLANs, inter-VLAN routing, trunking, STP, EtherChannel, OSPF and DHCP.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="certs">
+    <div class="sec-head"><code>05</code><h2>Certifications</h2></div>
+    <div class="certs">
+      <div class="cert"><b>Cybersecurity Incident Response Analysis</b><time>Mar 2026</time><span>Misk Skills / STC</span></div>
+      <div class="cert"><b>Network Defense</b><time>2026</time><span>Cisco Networking Academy</span></div>
+      <div class="cert"><b>Introduction to Cybersecurity</b><time>2026</time><span>Cisco Networking Academy</span></div>
+      <div class="cert"><b>Cybersecurity</b><time>2026</time><span>Misk Foundation</span></div>
+      <div class="cert"><b>Information Technology Fundamentals</b><time>2026</time><span>IBM SkillsBuild</span></div>
+      <div class="cert"><b>AWS Certified AI Practitioner (learning path)</b><time>2026</time><span>Saudi Digital Academy / AWS</span></div>
+      <div class="cert"><b>AWS Certified Cloud Practitioner (learning path)</b><time>2026</time><span>Saudi Digital Academy / AWS</span></div>
+      <div class="cert"><b>CompTIA Network+ (course)</b><time>Aug 2026</time><span>Future Skills / MCIT</span></div>
+      <div class="cert"><b>Python 101</b><time>Jul 2026</time><span>Tuwaiq Academy / Satr</span></div>
+      <div class="cert"><b>AI Exploration</b><time>Aug 2026</time><span>Course completion</span></div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="panel contact">
+      <code style="font-family:var(--f-mono);font-size:12px;color:var(--blush)">06 · contact</code>
+      <h2>Let's work together</h2>
+      <p style="color:var(--text-soft);max-width:52ch">Open to IT, networking, cybersecurity and junior developer roles. The fastest way to reach me is email.</p>
+      <div class="mail">
+        <code id="email">ahlam.u369@gmail.com</code>
+        <button class="btn btn-ghost" id="copyBtn" type="button">Copy email</button>
+        <span class="copied" id="copied" hidden>Copied</span>
+      </div>
+      <div class="cta" id="socialLinks"></div>
+    </div>
+    <footer><span>© 2026 Ahlam</span><span style="font-family:var(--f-mono)">built with HTML &amp; CSS</span></footer>
+  </section>
+</div>
+
+<script>
+// ---- Edit here: add your links and projects ----
+const LINKS = {
+  github: "https://github.com/AMV-00",
+  linkedin: "https://www.linkedin.com/in/ahlam-alharbi-14b091362/"
+};
+
+const PROJECTS = [
+  {
+    title: "ProSkill Academy",
+    tag: "Graduation project · E-learning platform",
+    points: [
+      "Full-stack e-learning platform connecting CS graduates with students building technical skills.",
+      "Laravel + MySQL backend following MVC, with a responsive HTML/CSS interface.",
+      "User authentication, course enrollment, and role-based access for students and instructors."
+    ],
+    stack: ["Laravel", "PHP", "MySQL", "MVC", "HTML/CSS"],
+    github: "https://github.com/AMV-00/SchoolOnlineProject-Final"
+  },
+  {
+    title: "Enterprise Switch Security Hardening",
+    tag: "Team project · Cisco Catalyst 9300",
+    points: [
+      "Hardened a physical Cisco Catalyst C9300-48U switch as part of a three-member team.",
+      "Secured management access with SSH hardening and ACLs, and segmented traffic with VLANs.",
+      "Layer 2 protections: port security, PortFast with BPDU Guard, and storm control. Bilingual lab reports for every phase."
+    ],
+    stack: ["Cisco IOS", "VLANs", "ACLs", "SSH", "Port Security"],
+    github: ""
+  }
+];
+// -----------------------------------------------
+
+const ghIcon = '<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38v-1.34c-2.23.48-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.06-.49.06-.49.8.06 1.23.83 1.23.83.72 1.22 1.87.87 2.33.66.07-.52.28-.87.5-1.07-1.78-.2-3.65-.89-3.65-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8 8 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>';
+const inIcon = '<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M0 1.15C0 .52.52 0 1.17 0h13.66C15.48 0 16 .52 16 1.15v13.7c0 .63-.52 1.15-1.17 1.15H1.17C.52 16 0 15.48 0 14.85V1.15Zm4.94 12.24V6.17H2.54v7.22h2.4ZM3.74 5.18c.84 0 1.36-.55 1.36-1.25-.02-.71-.52-1.25-1.34-1.25-.82 0-1.36.54-1.36 1.25 0 .7.52 1.25 1.33 1.25h.01Zm4.91 8.21V9.36c0-.22.02-.43.08-.59.17-.43.57-.88 1.23-.88.87 0 1.22.66 1.22 1.64v3.86h2.4V9.25c0-2.22-1.18-3.25-2.76-3.25-1.27 0-1.84.7-2.16 1.19v.03h-.02l.02-.03V6.17h-2.4c.03.68 0 7.22 0 7.22h2.4Z"/></svg>';
+
+function linkBtn(href, icon, label, cls){
+  return `<a class="btn ${cls}" href="${href}" target="_blank" rel="noopener">${icon}${label}</a>`;
+}
+
+const social = [];
+if (LINKS.github) social.push(linkBtn(LINKS.github, ghIcon, "GitHub", "btn-ghost"));
+if (LINKS.linkedin) social.push(linkBtn(LINKS.linkedin, inIcon, "LinkedIn", "btn-ghost"));
+document.getElementById("socialLinks").innerHTML = social.join("");
+document.getElementById("heroLinks").insertAdjacentHTML("beforeend", social.join(""));
+
+const list = document.getElementById("projectList");
+list.innerHTML = PROJECTS.map(p => `
+  <article class="panel project">
+    <div class="tag">${p.tag}</div>
+    <h3>${p.title}</h3>
+    <ul>${p.points.map(x => `<li>${x}</li>`).join("")}</ul>
+    <ul class="chips stack">${p.stack.map(s => `<li>${s}</li>`).join("")}</ul>
+    <div class="links">${p.github ? linkBtn(p.github, ghIcon, "View on GitHub", "btn-ghost") : '<span class="soon">GitHub repo coming soon</span>'}</div>
+  </article>`).join("") + `
+  <article class="panel project placeholder">
+    <div class="tag">Next up</div>
+    <h3 style="color:var(--text-soft)">More projects on the way</h3>
+    <p style="font-size:14.5px">New work will appear here as it lands on GitHub.</p>
+  </article>`;
+
+const copyBtn = document.getElementById("copyBtn");
+const copied = document.getElementById("copied");
+copyBtn.addEventListener("click", () => {
+  const email = document.getElementById("email").textContent;
+  const done = () => { copied.hidden = false; setTimeout(() => copied.hidden = true, 1800); };
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(email).then(done).catch(selectEmail);
+  } else selectEmail();
+});
+function selectEmail(){
+  const r = document.createRange(); r.selectNodeContents(document.getElementById("email"));
+  const s = getSelection(); s.removeAllRanges(); s.addRange(r);
+}
+</script>
+</body>
+</html>
