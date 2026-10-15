@@ -5,143 +5,198 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Ahlam · Portfolio</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<meta name="description" content="Ahlam — Information Technology graduate working across software, networking, cybersecurity and AI.">
+<meta name="description" content="Ahlam: Information Technology graduate working across software, networking, cybersecurity and AI.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
 <style>
-/* Layout: one long violet "aurora" sheet; glowing hero, then glass panels stacked in a single 980px column. */
+/* Layout: live "network" canvas behind a violet aurora; giant animated AHLAM hero, marquee, then glass panels that rise in on scroll. */
 :root{
   color-scheme: dark;
-  --ink-deep:#2A1D5C;      /* base violet */
-  --ink-mid:#5B3C8F;       /* gradient middle */
-  --ink-plum:#7A3E7E;      /* gradient end */
+  --ink-deep:#24184F;
+  --ink-mid:#4E3488;
+  --ink-plum:#7A3E7E;
   --glow-violet:#9C84FF;
   --glow-pink:#FF7DB5;
-  --text:#F7F3FF;
+  --glow-cyan:#8FE3FF;
+  --text:#F8F5FF;
   --text-soft:#DCD3F5;
-  --text-faint:#B7A9DE;
+  --text-faint:#B4A6DC;
   --blush:#FFC2DF;
-  --panel:rgba(255,255,255,.08);
-  --panel-line:rgba(255,255,255,.16);
-  --chip:rgba(255,255,255,.12);
-  --f-display:"Unbounded","Manrope",system-ui,sans-serif;
-  --f-body:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --panel:rgba(255,255,255,.07);
+  --panel-line:rgba(255,255,255,.15);
+  --chip:rgba(255,255,255,.11);
+  --f-display:"Syne","Outfit",system-ui,sans-serif;
+  --f-body:"Outfit",system-ui,-apple-system,"Segoe UI",sans-serif;
   --f-mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{
-  margin:0;font-family:var(--f-body);font-size:16px;line-height:1.65;color:var(--text);
-  background:linear-gradient(160deg,var(--ink-deep) 0%,var(--ink-mid) 45%,var(--ink-plum) 100%) fixed;
-  background-color:var(--ink-deep);
-  overflow-x:hidden;
+  margin:0;font-family:var(--f-body);font-size:17px;line-height:1.65;color:var(--text);font-weight:400;
+  background:linear-gradient(160deg,var(--ink-deep) 0%,var(--ink-mid) 50%,var(--ink-plum) 100%) fixed;
+  background-color:var(--ink-deep);overflow-x:hidden;
 }
+#net{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
 .aurora{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
-.aurora span{position:absolute;border-radius:50%;filter:blur(90px);opacity:.55}
-.aurora .a1{width:520px;height:520px;background:var(--glow-violet);top:-180px;right:-140px;animation:drift 18s ease-in-out infinite alternate}
-.aurora .a2{width:440px;height:440px;background:var(--glow-pink);top:40%;left:-200px;opacity:.4;animation:drift 22s ease-in-out infinite alternate-reverse}
-@keyframes drift{to{transform:translate(-40px,60px) scale(1.08)}}
-@media (prefers-reduced-motion:reduce){.aurora span{animation:none}html{scroll-behavior:auto}}
+.aurora span{position:absolute;border-radius:50%;filter:blur(90px)}
+.aurora .a1{width:560px;height:560px;background:var(--glow-violet);top:-200px;right:-160px;opacity:.55;animation:drift1 16s ease-in-out infinite alternate}
+.aurora .a2{width:480px;height:480px;background:var(--glow-pink);top:35%;left:-220px;opacity:.42;animation:drift2 20s ease-in-out infinite alternate}
+.aurora .a3{width:360px;height:360px;background:var(--glow-cyan);bottom:-160px;right:20%;opacity:.18;animation:drift1 24s ease-in-out infinite alternate-reverse}
+@keyframes drift1{to{transform:translate(-80px,90px) scale(1.15)}}
+@keyframes drift2{to{transform:translate(90px,-60px) scale(1.1)}}
+.cursor-glow{position:fixed;width:420px;height:420px;border-radius:50%;pointer-events:none;z-index:0;
+  background:radial-gradient(circle,rgba(255,194,223,.18),transparent 65%);transform:translate(-50%,-50%);left:-500px;top:-500px;transition:opacity .3s}
 
-.wrap{position:relative;z-index:1;max-width:980px;margin:0 auto;
+.wrap{position:relative;z-index:1;max-width:1040px;margin:0 auto;
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 48px}
 
-nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;display:flex;justify-content:space-between;align-items:center;gap:16px;
-  padding-block:14px;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
-.logo{font-family:var(--f-display);font-weight:700;font-size:18px;color:var(--text);text-decoration:none;letter-spacing:.02em}
-.logo b{color:var(--blush)}
-nav ul{display:flex;gap:20px;list-style:none;margin:0;padding:0;font-size:14px}
-nav a{color:var(--text-soft);text-decoration:none}
-nav a:hover,nav a:focus-visible{color:var(--text)}
-@media (max-width:640px){nav ul{display:none}}
-
+/* Nav */
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;display:flex;justify-content:space-between;align-items:center;gap:16px;padding-block:14px}
+nav::before{content:"";position:absolute;inset:0 -100vw;background:rgba(36,24,79,.35);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);z-index:-1;border-bottom:1px solid rgba(255,255,255,.06)}
+.logo{font-family:var(--f-display);font-weight:800;font-size:20px;color:var(--text);text-decoration:none;letter-spacing:.08em}
+.logo b{color:var(--blush);display:inline-block;animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{50%{transform:scale(1.6);color:var(--glow-pink)}}
+nav ul{display:flex;gap:24px;list-style:none;margin:0;padding:0;font-size:15px}
+nav a{color:var(--text-soft);text-decoration:none;position:relative}
+nav ul a::after{content:"";position:absolute;left:0;right:0;bottom:-4px;height:2px;border-radius:2px;background:linear-gradient(90deg,var(--glow-violet),var(--glow-pink));transform:scaleX(0);transform-origin:left;transition:transform .3s ease}
+nav ul a:hover::after,nav ul a:focus-visible::after{transform:scaleX(1)}
+nav a:hover{color:var(--text)}
+@media (max-width:680px){nav ul{display:none}}
 a:focus-visible,button:focus-visible{outline:2px solid var(--blush);outline-offset:3px;border-radius:6px}
 
 /* Hero */
-.hero{padding-block:72px 64px}
-.prompt{font-family:var(--f-mono);font-size:13px;color:var(--blush);margin:0 0 18px}
+.hero{padding-block:64px 40px;position:relative}
+.prompt{font-family:var(--f-mono);font-size:14px;color:var(--blush);margin:0 0 22px;min-height:1.6em}
 .prompt i{font-style:normal;color:var(--text-faint)}
-.caret{display:inline-block;width:8px;height:15px;background:var(--blush);vertical-align:-2px;margin-left:4px;animation:blink 1.1s steps(1) infinite}
+.caret{display:inline-block;width:9px;height:17px;background:var(--blush);vertical-align:-3px;margin-left:3px;animation:blink 1s steps(1) infinite}
 @keyframes blink{50%{opacity:0}}
-@media (prefers-reduced-motion:reduce){.caret{animation:none}}
-.hello{font-family:var(--f-mono);font-size:13px;letter-spacing:.3em;text-transform:uppercase;color:var(--text-soft);margin:0}
-h1{font-family:var(--f-display);font-weight:800;font-size:clamp(64px,15vw,148px);line-height:.95;margin:.08em 0 .15em;letter-spacing:-.02em;
-  background:linear-gradient(95deg,#FFFFFF 10%,var(--blush) 60%,#FFA6CF 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
-.role{font-size:clamp(17px,2.4vw,21px);font-weight:600;margin:0;color:var(--text)}
-.role span{color:var(--text-faint);font-weight:500}
-.lede{max-width:58ch;color:var(--text-soft);margin:18px 0 30px}
-.cta{display:flex;flex-wrap:wrap;gap:12px}
-.btn{display:inline-flex;align-items:center;gap:8px;font:600 14px var(--f-body);padding:11px 20px;border-radius:999px;text-decoration:none;cursor:pointer;border:1px solid transparent;transition:transform .15s ease,background .15s ease}
-.btn:hover{transform:translateY(-2px)}
-.btn-solid{background:var(--text);color:var(--ink-deep)}
-.btn-ghost{background:transparent;color:var(--text);border-color:var(--panel-line)}
-.btn-ghost:hover{background:var(--chip)}
+.hello{font-family:var(--f-mono);font-size:13px;letter-spacing:.4em;text-transform:uppercase;color:var(--text-soft);margin:0;
+  animation:rise .8s .1s cubic-bezier(.2,.8,.2,1) both}
+h1{font-family:var(--f-display);font-weight:800;font-size:clamp(76px,19vw,210px);line-height:.9;margin:.05em 0 .12em;letter-spacing:.02em;
+  display:flex;flex-wrap:wrap}
+h1 .ch{display:inline-block;
+  background:linear-gradient(100deg,#FFFFFF 0%,var(--blush) 30%,var(--glow-pink) 50%,var(--glow-violet) 70%,#FFFFFF 100%);background-size:300% 100%;
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  animation:drop .9s cubic-bezier(.2,.9,.25,1.2) both, shimmer 6s linear infinite;
+  transition:transform .25s ease}
+h1 .ch:hover{transform:translateY(-14px) rotate(-4deg)}
+h1 .ch:nth-child(1){animation-delay:.15s,0s}h1 .ch:nth-child(2){animation-delay:.25s,0s}h1 .ch:nth-child(3){animation-delay:.35s,0s}h1 .ch:nth-child(4){animation-delay:.45s,0s}h1 .ch:nth-child(5){animation-delay:.55s,0s}
+@keyframes drop{from{transform:translateY(60%) rotate(8deg);opacity:0;filter:blur(8px)}to{transform:none;opacity:1;filter:none}}
+@keyframes shimmer{to{background-position:-300% 0}}
+@keyframes rise{from{transform:translateY(20px);opacity:0}to{transform:none;opacity:1}}
+.role{font-size:clamp(18px,2.6vw,24px);font-weight:600;margin:0;color:var(--text);animation:rise .8s .7s cubic-bezier(.2,.8,.2,1) both}
+.role .rot{color:var(--blush);display:inline-block;min-width:1ch}
+.lede{max-width:56ch;color:var(--text-soft);margin:18px 0 30px;font-weight:300;font-size:18px;animation:rise .8s .85s cubic-bezier(.2,.8,.2,1) both}
+.cta{display:flex;flex-wrap:wrap;gap:12px;animation:rise .8s 1s cubic-bezier(.2,.8,.2,1) both}
+.btn{position:relative;display:inline-flex;align-items:center;gap:8px;font:600 15px var(--f-body);padding:12px 22px;border-radius:999px;text-decoration:none;cursor:pointer;border:1px solid transparent;transition:transform .2s ease,box-shadow .2s ease,background .2s ease;overflow:hidden}
+.btn:hover{transform:translateY(-3px)}
+.btn-solid{background:linear-gradient(90deg,var(--glow-violet),var(--glow-pink),var(--glow-violet));background-size:200% 100%;color:#fff;animation:slide 4s linear infinite;box-shadow:0 8px 30px -8px rgba(255,125,181,.7)}
+.btn-solid:hover{box-shadow:0 14px 40px -8px rgba(255,125,181,.9)}
+@keyframes slide{to{background-position:-200% 0}}
+.btn-ghost{background:rgba(255,255,255,.04);color:var(--text);border-color:var(--panel-line)}
+.btn-ghost:hover{background:var(--chip);border-color:var(--blush)}
+
+/* Stats */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:48px}
+.stat{padding:18px;border-radius:16px;background:var(--panel);border:1px solid var(--panel-line);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.stat b{display:block;font-family:var(--f-display);font-size:clamp(30px,4.6vw,44px);font-weight:800;line-height:1;font-variant-numeric:tabular-nums;
+  background:linear-gradient(90deg,#fff,var(--blush));-webkit-background-clip:text;background-clip:text;color:transparent}
+.stat span{font-size:13px;color:var(--text-faint);font-family:var(--f-mono);letter-spacing:.06em}
+@media (max-width:640px){.stats{grid-template-columns:repeat(2,1fr)}}
+
+/* Marquee */
+.marquee{position:relative;z-index:1;overflow:hidden;border-block:1px solid var(--panel-line);background:rgba(255,255,255,.04);padding-block:14px;margin-block:24px 8px;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent)}
+.track{display:flex;gap:40px;width:max-content;animation:scroll 32s linear infinite;font-family:var(--f-display);font-weight:700;font-size:22px;letter-spacing:.06em;color:var(--text-soft);white-space:nowrap}
+.track span::after{content:"✦";margin-left:40px;color:var(--glow-pink)}
+.marquee:hover .track{animation-play-state:paused}
+@keyframes scroll{to{transform:translateX(-50%)}}
 
 /* Sections */
-section{padding-block:40px}
-.sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:22px}
-.sec-head code{font-family:var(--f-mono);font-size:12px;color:var(--blush);opacity:.85}
-h2{font-family:var(--f-display);font-weight:700;font-size:clamp(24px,3.6vw,32px);margin:0;letter-spacing:-.01em;text-wrap:balance}
-h3{font-size:18px;margin:0;font-weight:700;text-wrap:balance}
-.panel{background:var(--panel);border:1px solid var(--panel-line);border-radius:18px;padding:24px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+section{padding-block:44px}
+.sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:24px}
+.sec-head code{font-family:var(--f-mono);font-size:13px;color:var(--blush)}
+h2{font-family:var(--f-display);font-weight:800;font-size:clamp(30px,4.6vw,46px);margin:0;letter-spacing:.01em;text-transform:uppercase;text-wrap:balance}
+h3{font-family:var(--f-display);font-size:20px;margin:0;font-weight:700;text-wrap:balance;letter-spacing:.01em}
+.panel{position:relative;background:var(--panel);border:1px solid var(--panel-line);border-radius:20px;padding:26px;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  transition:transform .35s cubic-bezier(.2,.8,.2,1),border-color .3s ease,box-shadow .35s ease}
+.glow{overflow:hidden}
+.glow::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0;transition:opacity .3s;
+  background:radial-gradient(380px circle at var(--mx,50%) var(--my,50%),rgba(255,194,223,.16),transparent 45%)}
+.glow:hover::before{opacity:1}
+.glow:hover{border-color:rgba(255,194,223,.45);box-shadow:0 20px 50px -20px rgba(156,132,255,.6)}
 p{margin:0}
 
-.about{display:grid;grid-template-columns:1.6fr 1fr;gap:20px}
+/* Reveal on scroll (only applied by JS to off-screen blocks) */
+.reveal{opacity:0;transform:translateY(40px) scale(.98)}
+.reveal.in{opacity:1;transform:none;transition:opacity .8s ease,transform .8s cubic-bezier(.2,.8,.2,1);transition-delay:var(--d,0s)}
+
+.about{display:grid;grid-template-columns:1.6fr 1fr;gap:18px}
 .about .panel p+p{margin-top:12px}
+.about p{color:var(--text-soft);font-weight:300}
 .facts{display:grid;gap:14px;align-content:start}
-.fact{display:grid;gap:2px}
-.fact dt{font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-faint)}
+.fact dt{font-family:var(--f-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--text-faint)}
 .fact dd{margin:0;font-weight:600}
 @media (max-width:760px){.about{grid-template-columns:1fr}}
 
-/* Skills */
-.skills{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:16px}
-.skill h3{font-size:15px;margin-bottom:12px;color:var(--blush)}
+.skills{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:16px}
+.skill h3{font-size:16px;margin-bottom:14px;color:var(--blush);display:flex;align-items:center;gap:10px}
+.skill h3 i{width:10px;height:10px;border-radius:50%;background:var(--glow-pink);box-shadow:0 0 12px var(--glow-pink);animation:pulse2 2.4s ease-in-out infinite}
+@keyframes pulse2{50%{box-shadow:0 0 22px 4px var(--glow-pink)}}
 .chips{display:flex;flex-wrap:wrap;gap:8px;list-style:none;margin:0;padding:0}
-.chips li{font-size:13px;padding:5px 11px;border-radius:999px;background:var(--chip);color:var(--text)}
+.chips li{font-size:14px;padding:6px 12px;border-radius:999px;background:var(--chip);color:var(--text);border:1px solid transparent;transition:transform .2s ease,background .2s ease,border-color .2s}
+.chips li:hover{transform:translateY(-3px) scale(1.06);background:rgba(255,194,223,.18);border-color:rgba(255,194,223,.5)}
 
-/* Projects */
-.projects{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}
-.project{display:flex;flex-direction:column;gap:14px;min-width:0}
-.project .tag{font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-faint)}
-.project ul{margin:0;padding-left:18px;color:var(--text-soft);font-size:14.5px;display:grid;gap:6px}
-.project .stack{margin-top:auto}
+.projects{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:18px}
+.project{display:flex;flex-direction:column;gap:14px;min-width:0;transform-style:preserve-3d}
+.project .tag{font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--blush)}
+.project ul{margin:0;padding-left:18px;color:var(--text-soft);font-size:15px;display:grid;gap:6px;font-weight:300}
+.project .stack{margin-top:auto;padding-left:0}
 .project .stack li{font-family:var(--f-mono);font-size:12px}
 .project .links{display:flex;gap:10px;flex-wrap:wrap}
 .soon{font-family:var(--f-mono);font-size:12px;color:var(--text-faint);border:1px dashed var(--panel-line);border-radius:999px;padding:6px 12px}
-.project.placeholder{border-style:dashed;background:transparent;justify-content:center;align-items:flex-start;color:var(--text-faint)}
+.project.placeholder{border-style:dashed;background:transparent;justify-content:center;color:var(--text-faint)}
+.project.placeholder .plus{font-family:var(--f-display);font-size:48px;line-height:1;color:var(--blush);animation:spin 8s linear infinite;display:inline-block;width:max-content}
+@keyframes spin{to{transform:rotate(360deg)}}
 
-/* Experience */
-.xp{display:grid;grid-template-columns:200px 1fr;gap:24px}
-.xp .when{font-family:var(--f-mono);font-size:12px;color:var(--text-faint);letter-spacing:.06em}
-.xp ul{margin:10px 0 0;padding-left:18px;color:var(--text-soft);display:grid;gap:6px;font-size:15px}
+.xp{display:grid;grid-template-columns:210px 1fr;gap:24px}
+.xp .when{font-family:var(--f-mono);font-size:12px;color:var(--text-faint);letter-spacing:.08em}
+.xp ul{margin:12px 0 0;padding-left:18px;color:var(--text-soft);display:grid;gap:6px;font-size:15.5px;font-weight:300}
 .xp .org{color:var(--blush);font-weight:600}
 @media (max-width:640px){.xp{grid-template-columns:1fr;gap:6px}}
 
-/* Certs */
-.certs{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
-.cert{display:grid;grid-template-columns:1fr auto;gap:4px 12px;align-items:baseline;padding:16px 18px;border-radius:14px;background:var(--panel);border:1px solid var(--panel-line)}
-.cert b{font-weight:600;font-size:15px}
-.cert time{font-family:var(--f-mono);font-size:12px;color:var(--text-faint);font-variant-numeric:tabular-nums;white-space:nowrap}
-.cert span{grid-column:1/-1;color:var(--text-faint);font-size:13px}
+.certs{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:12px}
+.cert{display:grid;grid-template-columns:1fr auto;gap:4px 12px;align-items:baseline;padding:16px 18px;border-radius:16px}
+.cert b{font-weight:600;font-size:15.5px}
+.cert time{font-family:var(--f-mono);font-size:12px;color:var(--blush);font-variant-numeric:tabular-nums;white-space:nowrap}
+.cert span{grid-column:1/-1;color:var(--text-faint);font-size:13.5px}
+.cert:hover{transform:translateX(6px)}
 
-/* Contact */
-.contact{text-align:left;display:grid;gap:18px;padding:36px}
-.contact h2{font-size:clamp(28px,5vw,44px)}
+.contact{display:grid;gap:18px;padding:40px;text-align:left}
+.contact h2{font-size:clamp(34px,7vw,72px);line-height:1;
+  background:linear-gradient(100deg,#fff,var(--blush),var(--glow-pink),var(--glow-violet),#fff);background-size:300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shimmer 6s linear infinite}
 .mail{display:flex;flex-wrap:wrap;align-items:center;gap:12px}
-.mail code{font-family:var(--f-mono);font-size:clamp(15px,2.4vw,19px);color:var(--text);user-select:all;word-break:break-all}
-.copied{font-size:13px;color:var(--blush)}
+.mail code{font-family:var(--f-mono);font-size:clamp(15px,2.4vw,20px);color:var(--text);user-select:all;word-break:break-all}
+.copied{font-size:14px;color:var(--blush)}
 footer{padding-top:28px;color:var(--text-faint);font-size:13px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+  .reveal{opacity:1;transform:none}
+}
 </style>
 </head>
 <body>
 
-<div class="aurora" aria-hidden="true"><span class="a1"></span><span class="a2"></span></div>
+<canvas id="net" aria-hidden="true"></canvas>
+<div class="aurora" aria-hidden="true"><span class="a1"></span><span class="a2"></span><span class="a3"></span></div>
+<div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
 
 <div class="wrap">
   <nav>
-    <a class="logo" href="#top">ahlam<b>.</b></a>
+    <a class="logo" href="#top">AHLAM<b>.</b></a>
     <ul>
       <li><a href="#about">About</a></li>
       <li><a href="#skills">Skills</a></li>
@@ -152,25 +207,40 @@ footer{padding-top:28px;color:var(--text-faint);font-size:13px;display:flex;just
   </nav>
 
   <header class="hero" id="top">
-    <p class="prompt">ahlam@portfolio<i>:~$</i> whoami<span class="caret"></span></p>
+    <p class="prompt">ahlam@portfolio<i>:~$</i> <span id="typed"></span><span class="caret"></span></p>
     <p class="hello">Hi, I'm</p>
-    <h1>Ahlam</h1>
-    <p class="role">Information Technology <span>· AI &amp; Digital Technologies</span></p>
+    <h1 aria-label="AHLAM"><span class="ch">A</span><span class="ch">H</span><span class="ch">L</span><span class="ch">A</span><span class="ch">M</span></h1>
+    <p class="role">Information Technology · <span class="rot" id="rot">AI &amp; Digital Technologies</span></p>
     <p class="lede">IT graduate from Saudi Electronic University. I build web apps, configure and secure networks, run Windows and Linux servers, and I'm growing into AI, Python and the cloud.</p>
     <div class="cta" id="heroLinks">
       <a class="btn btn-solid" href="#projects">View projects</a>
       <a class="btn btn-ghost" href="#contact">Get in touch</a>
     </div>
+    <div class="stats">
+      <div class="stat"><b data-count="10">10</b><span>certificates</span></div>
+      <div class="stat"><b data-count="2">2</b><span>major projects</span></div>
+      <div class="stat"><b data-count="25" data-suffix="+">25+</b><span>tools &amp; skills</span></div>
+      <div class="stat"><b data-count="2026">2026</b><span>B.Sc. graduate</span></div>
+    </div>
   </header>
+</div>
 
+<div class="marquee" aria-hidden="true">
+  <div class="track">
+    <span>PYTHON</span><span>LARAVEL</span><span>MYSQL</span><span>CISCO</span><span>WINDOWS SERVER</span><span>ACTIVE DIRECTORY</span><span>LINUX</span><span>AWS</span><span>CYBERSECURITY</span><span>POWERSHELL</span><span>VLANS</span><span>AI</span>
+    <span>PYTHON</span><span>LARAVEL</span><span>MYSQL</span><span>CISCO</span><span>WINDOWS SERVER</span><span>ACTIVE DIRECTORY</span><span>LINUX</span><span>AWS</span><span>CYBERSECURITY</span><span>POWERSHELL</span><span>VLANS</span><span>AI</span>
+  </div>
+</div>
+
+<div class="wrap">
   <section id="about">
     <div class="sec-head"><code>01</code><h2>About me</h2></div>
     <div class="about">
-      <div class="panel">
+      <div class="panel glow">
         <p>I'm an Information Technology graduate with hands-on experience across software development, networking, systems administration and cybersecurity.</p>
         <p>Through technical projects and cooperative training I've built a full-stack e-learning platform, hardened enterprise Cisco switches, and run virtualized Windows Server and Ubuntu labs. I like solving problems, writing clear technical documentation, and learning something new every week.</p>
       </div>
-      <dl class="panel facts">
+      <dl class="panel glow facts">
         <div class="fact"><dt>Degree</dt><dd>B.Sc. Information Technology, 2026</dd></div>
         <div class="fact"><dt>University</dt><dd>Saudi Electronic University</dd></div>
         <div class="fact"><dt>Based in</dt><dd>Saudi Arabia</dd></div>
@@ -182,12 +252,12 @@ footer{padding-top:28px;color:var(--text-faint);font-size:13px;display:flex;just
   <section id="skills">
     <div class="sec-head"><code>02</code><h2>Skills</h2></div>
     <div class="skills">
-      <div class="panel skill"><h3>Programming &amp; Development</h3><ul class="chips"><li>Python</li><li>Laravel (PHP)</li><li>HTML</li><li>CSS</li><li>MVC Architecture</li><li>PowerShell</li></ul></div>
-      <div class="panel skill"><h3>Databases</h3><ul class="chips"><li>MySQL</li><li>SQL</li><li>Oracle Fundamentals</li></ul></div>
-      <div class="panel skill"><h3>AI &amp; Cloud</h3><ul class="chips"><li>AI Fundamentals</li><li>AWS Cloud</li><li>AWS AI Practitioner path</li></ul></div>
-      <div class="panel skill"><h3>IT Infrastructure</h3><ul class="chips"><li>Windows Server</li><li>Active Directory</li><li>DNS</li><li>Ubuntu Linux</li><li>VMware</li><li>VirtualBox</li></ul></div>
-      <div class="panel skill"><h3>Networking &amp; Security</h3><ul class="chips"><li>TCP/IP</li><li>IPv4/IPv6 Subnetting</li><li>VLANs</li><li>Routing &amp; Switching</li><li>NAT</li><li>Firewalls</li><li>IDS/IPS</li><li>Switch Hardening</li></ul></div>
-      <div class="panel skill"><h3>Tools</h3><ul class="chips"><li>Cisco Packet Tracer</li><li>Microsoft Office</li></ul></div>
+      <div class="panel glow skill"><h3><i></i>Programming &amp; Development</h3><ul class="chips"><li>Python</li><li>Laravel (PHP)</li><li>HTML</li><li>CSS</li><li>MVC Architecture</li><li>PowerShell</li></ul></div>
+      <div class="panel glow skill"><h3><i></i>Databases</h3><ul class="chips"><li>MySQL</li><li>SQL</li><li>Oracle Fundamentals</li></ul></div>
+      <div class="panel glow skill"><h3><i></i>AI &amp; Cloud</h3><ul class="chips"><li>AI Fundamentals</li><li>AWS Cloud</li><li>AWS AI Practitioner path</li></ul></div>
+      <div class="panel glow skill"><h3><i></i>IT Infrastructure</h3><ul class="chips"><li>Windows Server</li><li>Active Directory</li><li>DNS</li><li>Ubuntu Linux</li><li>VMware</li><li>VirtualBox</li></ul></div>
+      <div class="panel glow skill"><h3><i></i>Networking &amp; Security</h3><ul class="chips"><li>TCP/IP</li><li>IPv4/IPv6 Subnetting</li><li>VLANs</li><li>Routing &amp; Switching</li><li>NAT</li><li>Firewalls</li><li>IDS/IPS</li><li>Switch Hardening</li></ul></div>
+      <div class="panel glow skill"><h3><i></i>Tools</h3><ul class="chips"><li>Cisco Packet Tracer</li><li>Microsoft Office</li></ul></div>
     </div>
   </section>
 
@@ -198,7 +268,7 @@ footer{padding-top:28px;color:var(--text-faint);font-size:13px;display:flex;just
 
   <section id="experience">
     <div class="sec-head"><code>04</code><h2>Experience</h2></div>
-    <div class="panel xp">
+    <div class="panel glow xp">
       <div class="when">COOPERATIVE TRAINING</div>
       <div>
         <h3>IT &amp; Cybersecurity Trainee</h3>
@@ -216,32 +286,32 @@ footer{padding-top:28px;color:var(--text-faint);font-size:13px;display:flex;just
   <section id="certs">
     <div class="sec-head"><code>05</code><h2>Certifications</h2></div>
     <div class="certs">
-      <div class="cert"><b>Cybersecurity Incident Response Analysis</b><time>Mar 2026</time><span>Misk Skills / STC</span></div>
-      <div class="cert"><b>Network Defense</b><time>2026</time><span>Cisco Networking Academy</span></div>
-      <div class="cert"><b>Introduction to Cybersecurity</b><time>2026</time><span>Cisco Networking Academy</span></div>
-      <div class="cert"><b>Cybersecurity</b><time>2026</time><span>Misk Foundation</span></div>
-      <div class="cert"><b>Information Technology Fundamentals</b><time>2026</time><span>IBM SkillsBuild</span></div>
-      <div class="cert"><b>AWS Certified AI Practitioner (learning path)</b><time>2026</time><span>Saudi Digital Academy / AWS</span></div>
-      <div class="cert"><b>AWS Certified Cloud Practitioner (learning path)</b><time>2026</time><span>Saudi Digital Academy / AWS</span></div>
-      <div class="cert"><b>CompTIA Network+ (course)</b><time>Aug 2026</time><span>Future Skills / MCIT</span></div>
-      <div class="cert"><b>Python 101</b><time>Jul 2026</time><span>Tuwaiq Academy / Satr</span></div>
-      <div class="cert"><b>AI Exploration</b><time>Aug 2026</time><span>Course completion</span></div>
+      <div class="cert panel glow"><b>Cybersecurity Incident Response Analysis</b><time>Mar 2026</time><span>Misk Skills / STC</span></div>
+      <div class="cert panel glow"><b>Network Defense</b><time>2026</time><span>Cisco Networking Academy</span></div>
+      <div class="cert panel glow"><b>Introduction to Cybersecurity</b><time>2026</time><span>Cisco Networking Academy</span></div>
+      <div class="cert panel glow"><b>Cybersecurity</b><time>2026</time><span>Misk Foundation</span></div>
+      <div class="cert panel glow"><b>Information Technology Fundamentals</b><time>2026</time><span>IBM SkillsBuild</span></div>
+      <div class="cert panel glow"><b>AWS Certified AI Practitioner (learning path)</b><time>2026</time><span>Saudi Digital Academy / AWS</span></div>
+      <div class="cert panel glow"><b>AWS Certified Cloud Practitioner (learning path)</b><time>2026</time><span>Saudi Digital Academy / AWS</span></div>
+      <div class="cert panel glow"><b>CompTIA Network+ (course)</b><time>Aug 2026</time><span>Future Skills / MCIT</span></div>
+      <div class="cert panel glow"><b>Python 101</b><time>Jul 2026</time><span>Tuwaiq Academy / Satr</span></div>
+      <div class="cert panel glow"><b>AI Exploration</b><time>Aug 2026</time><span>Course completion</span></div>
     </div>
   </section>
 
   <section id="contact">
-    <div class="panel contact">
-      <code style="font-family:var(--f-mono);font-size:12px;color:var(--blush)">06 · contact</code>
+    <div class="panel glow contact">
+      <code style="font-family:var(--f-mono);font-size:13px;color:var(--blush)">06 · contact</code>
       <h2>Let's work together</h2>
-      <p style="color:var(--text-soft);max-width:52ch">Open to IT, networking, cybersecurity and junior developer roles. The fastest way to reach me is email.</p>
+      <p style="color:var(--text-soft);max-width:52ch;font-weight:300">Open to IT, networking, cybersecurity and junior developer roles. The fastest way to reach me is email.</p>
       <div class="mail">
         <code id="email">ahlam.u369@gmail.com</code>
         <button class="btn btn-ghost" id="copyBtn" type="button">Copy email</button>
-        <span class="copied" id="copied" hidden>Copied</span>
+        <span class="copied" id="copied" hidden>Copied ✓</span>
       </div>
-      <div class="cta" id="socialLinks"></div>
+      <div class="cta" id="socialLinks" style="animation:none"></div>
     </div>
-    <footer><span>© 2026 Ahlam</span><span style="font-family:var(--f-mono)">built with HTML &amp; CSS</span></footer>
+    <footer><span>© 2026 Ahlam</span><span style="font-family:var(--f-mono)">built with HTML, CSS &amp; JS</span></footer>
   </section>
 </div>
 
@@ -278,12 +348,11 @@ const PROJECTS = [
 ];
 // -----------------------------------------------
 
+const reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+
 const ghIcon = '<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38v-1.34c-2.23.48-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.06-.49.06-.49.8.06 1.23.83 1.23.83.72 1.22 1.87.87 2.33.66.07-.52.28-.87.5-1.07-1.78-.2-3.65-.89-3.65-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8 8 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>';
 const inIcon = '<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M0 1.15C0 .52.52 0 1.17 0h13.66C15.48 0 16 .52 16 1.15v13.7c0 .63-.52 1.15-1.17 1.15H1.17C.52 16 0 15.48 0 14.85V1.15Zm4.94 12.24V6.17H2.54v7.22h2.4ZM3.74 5.18c.84 0 1.36-.55 1.36-1.25-.02-.71-.52-1.25-1.34-1.25-.82 0-1.36.54-1.36 1.25 0 .7.52 1.25 1.33 1.25h.01Zm4.91 8.21V9.36c0-.22.02-.43.08-.59.17-.43.57-.88 1.23-.88.87 0 1.22.66 1.22 1.64v3.86h2.4V9.25c0-2.22-1.18-3.25-2.76-3.25-1.27 0-1.84.7-2.16 1.19v.03h-.02l.02-.03V6.17h-2.4c.03.68 0 7.22 0 7.22h2.4Z"/></svg>';
-
-function linkBtn(href, icon, label, cls){
-  return `<a class="btn ${cls}" href="${href}" target="_blank" rel="noopener">${icon}${label}</a>`;
-}
+const linkBtn = (href, icon, label, cls) => `<a class="btn ${cls}" href="${href}" target="_blank" rel="noopener">${icon}${label}</a>`;
 
 const social = [];
 if (LINKS.github) social.push(linkBtn(LINKS.github, ghIcon, "GitHub", "btn-ghost"));
@@ -291,9 +360,8 @@ if (LINKS.linkedin) social.push(linkBtn(LINKS.linkedin, inIcon, "LinkedIn", "btn
 document.getElementById("socialLinks").innerHTML = social.join("");
 document.getElementById("heroLinks").insertAdjacentHTML("beforeend", social.join(""));
 
-const list = document.getElementById("projectList");
-list.innerHTML = PROJECTS.map(p => `
-  <article class="panel project">
+document.getElementById("projectList").innerHTML = PROJECTS.map(p => `
+  <article class="panel glow project tilt">
     <div class="tag">${p.tag}</div>
     <h3>${p.title}</h3>
     <ul>${p.points.map(x => `<li>${x}</li>`).join("")}</ul>
@@ -301,24 +369,112 @@ list.innerHTML = PROJECTS.map(p => `
     <div class="links">${p.github ? linkBtn(p.github, ghIcon, "View on GitHub", "btn-ghost") : '<span class="soon">GitHub repo coming soon</span>'}</div>
   </article>`).join("") + `
   <article class="panel project placeholder">
-    <div class="tag">Next up</div>
+    <span class="plus">+</span>
     <h3 style="color:var(--text-soft)">More projects on the way</h3>
-    <p style="font-size:14.5px">New work will appear here as it lands on GitHub.</p>
+    <p style="font-size:15px">New work will appear here as it lands on GitHub.</p>
   </article>`;
 
-const copyBtn = document.getElementById("copyBtn");
+// Copy email
 const copied = document.getElementById("copied");
-copyBtn.addEventListener("click", () => {
-  const email = document.getElementById("email").textContent;
+document.getElementById("copyBtn").addEventListener("click", () => {
+  const el = document.getElementById("email");
   const done = () => { copied.hidden = false; setTimeout(() => copied.hidden = true, 1800); };
-  if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(email).then(done).catch(selectEmail);
-  } else selectEmail();
+  const select = () => { const r = document.createRange(); r.selectNodeContents(el); const s = getSelection(); s.removeAllRanges(); s.addRange(r); };
+  try { navigator.clipboard.writeText(el.textContent).then(done).catch(select); } catch (e) { select(); }
 });
-function selectEmail(){
-  const r = document.createRange(); r.selectNodeContents(document.getElementById("email"));
-  const s = getSelection(); s.removeAllRanges(); s.addRange(r);
+
+// Typing terminal + rotating role
+const cmds = ["whoami", "cat skills.txt", "ping opportunities", "sudo hire ahlam"];
+const roles = ["AI & Digital Technologies", "Networking & Security", "Web Development", "Cloud & Systems"];
+const typed = document.getElementById("typed"), rot = document.getElementById("rot");
+if (reduce) { typed.textContent = cmds[0]; }
+else {
+  let ci = 0, i = 0, del = false;
+  (function tick(){
+    const w = cmds[ci];
+    typed.textContent = w.slice(0, i);
+    if (!del && i === w.length) { del = true; return setTimeout(tick, 1600); }
+    if (del && i === 0) { del = false; ci = (ci + 1) % cmds.length; }
+    i += del ? -1 : 1;
+    setTimeout(tick, del ? 40 : 90);
+  })();
+  let ri = 0;
+  setInterval(() => {
+    ri = (ri + 1) % roles.length;
+    rot.animate([{opacity:1, transform:"none"},{opacity:0, transform:"translateY(-10px)"}], {duration:250, fill:"forwards"}).onfinish = () => {
+      rot.textContent = roles[ri];
+      rot.animate([{opacity:0, transform:"translateY(10px)"},{opacity:1, transform:"none"}], {duration:300, fill:"forwards"});
+    };
+  }, 2800);
 }
+
+// Count-up stats
+function countUp(el){
+  const end = +el.dataset.count, suf = el.dataset.suffix || "", start = end > 1000 ? end - 30 : 0, t0 = performance.now(), dur = 1400;
+  (function f(t){ const k = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - k, 3);
+    el.textContent = Math.round(start + (end - start) * e) + suf; if (k < 1) requestAnimationFrame(f); })(t0);
+}
+if (!reduce) document.querySelectorAll("[data-count]").forEach(el => setTimeout(() => countUp(el), 900));
+
+// Reveal off-screen blocks as they scroll in (on-screen content stays visible at load)
+if (!reduce && "IntersectionObserver" in window) {
+  const blocks = document.querySelectorAll(".sec-head, .panel, .cert");
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), {threshold:.12});
+  blocks.forEach((el, n) => {
+    if (el.getBoundingClientRect().top > innerHeight) {
+      el.classList.add("reveal");
+      el.style.setProperty("--d", ((n % 3) * 0.08) + "s");
+      io.observe(el);
+    }
+  });
+}
+
+// Spotlight glow + 3D tilt on cards, cursor glow
+const cg = document.getElementById("cursorGlow");
+addEventListener("pointermove", e => { cg.style.left = e.clientX + "px"; cg.style.top = e.clientY + "px"; }, {passive:true});
+document.querySelectorAll(".glow").forEach(c => {
+  c.addEventListener("pointermove", e => {
+    const r = c.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
+    c.style.setProperty("--mx", x + "px"); c.style.setProperty("--my", y + "px");
+    if (!reduce && c.classList.contains("tilt")) {
+      const rx = ((y / r.height) - .5) * -8, ry = ((x / r.width) - .5) * 8;
+      c.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-4px)`;
+    }
+  });
+  c.addEventListener("pointerleave", () => { c.style.transform = ""; });
+});
+
+// Background: a slowly drifting network of connected nodes
+(function(){
+  const cv = document.getElementById("net"), ctx = cv.getContext("2d");
+  let W, H, dpr, nodes = [], mouse = {x:-999, y:-999};
+  function size(){
+    dpr = Math.min(2, devicePixelRatio || 1); W = innerWidth; H = innerHeight;
+    cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr,0,0,dpr,0,0);
+    const n = Math.round(Math.min(90, W * H / 16000));
+    nodes = Array.from({length:n}, () => ({x:Math.random()*W, y:Math.random()*H, vx:(Math.random()-.5)*.35, vy:(Math.random()-.5)*.35, r:Math.random()*1.6+.8}));
+  }
+  addEventListener("resize", size); size();
+  addEventListener("pointermove", e => { mouse.x = e.clientX; mouse.y = e.clientY; }, {passive:true});
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    for (const p of nodes) {
+      if (!reduce) { p.x += p.vx; p.y += p.vy; if (p.x<0||p.x>W) p.vx*=-1; if (p.y<0||p.y>H) p.vy*=-1; }
+    }
+    for (let i=0;i<nodes.length;i++){
+      const a = nodes[i];
+      for (let j=i+1;j<nodes.length;j++){
+        const b = nodes[j], dx=a.x-b.x, dy=a.y-b.y, d=dx*dx+dy*dy;
+        if (d < 17000){ ctx.strokeStyle = `rgba(220,205,255,${(1-d/17000)*.22})`; ctx.lineWidth=1; ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke(); }
+      }
+      const mx=a.x-mouse.x, my=a.y-mouse.y, md=mx*mx+my*my;
+      if (md < 26000){ ctx.strokeStyle = `rgba(255,194,223,${(1-md/26000)*.55})`; ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(mouse.x,mouse.y); ctx.stroke(); }
+      ctx.fillStyle = "rgba(255,230,245,.75)"; ctx.beginPath(); ctx.arc(a.x,a.y,a.r,0,Math.PI*2); ctx.fill();
+    }
+    if (!reduce) requestAnimationFrame(draw);
+  }
+  draw();
+})();
 </script>
 </body>
 </html>
