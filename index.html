@@ -221,6 +221,19 @@ p{margin:0}
 .sd-flow span{position:relative;display:block;padding:6px 8px 6px 28px;border-radius:8px;background:rgba(255,255,255,.05);font-size:11.5px;color:var(--text-soft);animation:popin .5s cubic-bezier(.2,.9,.25,1.3) both}
 .sd-flow span::before{counter-increment:f;content:counter(f);position:absolute;left:7px;top:50%;transform:translateY(-50%);width:15px;height:15px;border-radius:50%;display:grid;place-items:center;font:600 9.5px var(--f-mono);background:linear-gradient(135deg,#9C84FF,#FF7DB5);color:#fff}
 .sd-flow span:last-child{color:#7CF0B0}
+/* image gallery (crossfade) */
+.gallery{position:absolute;inset:0}
+.gallery img{position:absolute;inset:0;opacity:0;transition:opacity .9s ease,transform .8s cubic-bezier(.2,.8,.2,1)}
+.gallery img.on{opacity:1}
+.gallery .cap{position:absolute;left:12px;bottom:12px;z-index:2;max-width:calc(100% - 90px);font:500 11px var(--f-mono);letter-spacing:.06em;padding:5px 10px;border-radius:999px;background:rgba(20,10,50,.7);color:#fff;border:1px solid rgba(255,194,223,.25);backdrop-filter:blur(6px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gallery .dots{position:absolute;right:12px;bottom:16px;z-index:2;display:flex;gap:5px}
+.gallery .dots i{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.35);transition:background .3s,transform .3s;cursor:pointer}
+.gallery .dots i.on{background:#FF9BC6;transform:scale(1.3)}
+/* checklist dashboard */
+.sd-checks{display:grid;gap:6px}
+.sd-check{display:grid;grid-template-columns:18px 1fr auto;align-items:center;gap:8px;padding:6px 8px;border-radius:8px;background:rgba(255,255,255,.04);font-size:12px;color:var(--text-soft);animation:slidein .5s cubic-bezier(.2,.8,.2,1) both}
+.sd-check b{width:18px;height:18px;border-radius:50%;display:grid;place-items:center;font-size:10px;background:rgba(124,240,176,.16);color:#7CF0B0}
+.sd-check em{font-style:normal;font-family:var(--f-mono);font-size:10.5px;color:var(--text-faint);white-space:nowrap}
 /* wait to animate until visible */
 .stats-dash:not(.play) *{animation-play-state:paused!important}
 @media (max-width:440px){.sd-kpis{grid-template-columns:repeat(2,1fr)}.sd-row{grid-template-columns:1fr}}
@@ -476,16 +489,41 @@ const PROJECTS = [
   },
   {
     title: "Enterprise Switch Security Hardening",
-    tag: "Team project · Cisco Catalyst 9300",
+    tag: "Team project · Cisco Catalyst C9300-48U",
     points: [
-      "Hardened a physical Cisco Catalyst C9300-48U switch as part of a three-member team.",
-      "Secured management access with SSH hardening and ACLs, and segmented traffic with VLANs.",
-      "Layer 2 protections: port security, PortFast with BPDU Guard, and storm control. Bilingual lab reports for every phase."
+      "Configured and hardened a physical Cisco Catalyst C9300-48U (IOS-XE 17.15) as a three-member team, across 17 documented lab phases.",
+      "Segmented the network into VLANs 10/20/30, isolated 45 unused ports in a shut-down VLAN 999, and enabled inter-VLAN routing with Layer 3 SVIs.",
+      "Management plane locked down: SSH v2 only, Telnet blocked, and a VTY access list that allows only the management VLAN host.",
+      "Layer 2 protections: sticky port security, PortFast with BPDU Guard and storm control, plus SPAN, log analysis, troubleshooting and a full configuration audit."
     ],
-    stack: ["Cisco IOS", "VLANs", "ACLs", "SSH", "Port Security"],
+    stack: ["Cisco IOS-XE", "VLANs", "Inter-VLAN Routing", "ACLs", "SSH", "Port Security", "SPAN"],
     github: "",
     visual: "network",
-    media: null
+    // Real screenshots and photos from the lab
+    media: { type: "gallery", ar: "16/9", items: [
+      ["media/photo_switch_169.jpg", "The lab switch · C9300-48U"],
+      ["media/01_vlans.jpg", "show vlan brief · VLAN 10 / 20 / 30"],
+      ["media/02_port_assignment.jpg", "Unused ports shut down in VLAN 999"],
+      ["media/03_inter_vlan_routing.jpg", "show ip route · inter-VLAN routing"],
+      ["media/04_ping_across_vlans.jpg", "Ping VLAN 10 → VLAN 20 · 0% loss"],
+      ["media/05_ssh_management.jpg", "SSH-only management access"],
+      ["media/photo_lab_169.jpg", "Testing from the lab laptops"]
+    ] },
+    // Taken from the team's lab report
+    dashboard: {
+      kind: "checks",
+      title: "Lab verification",
+      kpis: [["17", "Lab phases"], ["4", "VLANs"], ["45", "Ports isolated"], ["0", "CRC errors"]],
+      checks: [
+        ["Inter-VLAN routing (Layer 3)", "Phase 6"],
+        ["Port security · sticky + restrict", "Phase 8"],
+        ["PortFast + BPDU Guard", "Phase 9"],
+        ["Storm control · 20% broadcast", "Phase 10"],
+        ["SSH v2 only + management ACL", "Phase 11"],
+        ["SPAN session active", "Phase 12"],
+        ["Configuration audit", "Phase 17"]
+      ]
+    }
   }
 ];
 // -----------------------------------------------
@@ -528,6 +566,7 @@ const demos = {
 };
 function mediaHTML(p){
   if (p.media && p.media.type === "video") return `<video src="${p.media.src}"${p.media.poster ? ` poster="${p.media.poster}"` : ""} autoplay muted loop playsinline></video>`;
+  if (p.media && p.media.type === "gallery") return `<div class="gallery">${p.media.items.map((it, i) => `<img src="${it[0]}" alt="${it[1]}" data-cap="${it[1]}"${i ? ' loading="lazy"' : ' class="on"'}>`).join("")}<span class="dots">${p.media.items.map((_, i) => `<i${i ? "" : ' class="on"'}></i>`).join("")}</span></div>`;
   if (p.media && p.media.type === "image") return `<img src="${p.media.src}" alt="${p.title} screenshot" loading="lazy">`;
   return (demos[p.visual] || "") + '<span class="badge">PREVIEW</span>';
 }
@@ -541,8 +580,16 @@ function testsDash(d){
     </div>
   </aside>`;
 }
+function checksDash(d){
+  return `<aside class="stats-dash" aria-label="${d.title}">
+    <div class="sd-head"><b>${d.title}</b><span class="live">From the lab</span></div>
+    <div class="sd-kpis">${d.kpis.map(k => `<div class="sd-kpi"><strong data-count="${k[0]}">${k[0]}</strong><small>${k[1]}</small></div>`).join("")}</div>
+    <div class="sd-card"><h4>Verified</h4><div class="sd-checks">${d.checks.map((c, i) => `<div class="sd-check" style="animation-delay:${i * .12}s"><b>✓</b><span>${c[0]}</span><em>${c[1]}</em></div>`).join("")}</div></div>
+  </aside>`;
+}
 function dashHTML(d){
   if (d.kind === "tests") return testsDash(d);
+  if (d.kind === "checks") return checksDash(d);
   const max = Math.max(...d.prices.map(x => x[1]));
   const paid = d.prices.filter(x => x[1] > 0).length, total = d.prices.length, C = 251.33;
   return `<aside class="stats-dash" aria-label="${d.title}">
@@ -569,6 +616,17 @@ document.getElementById("projectList").innerHTML = PROJECTS.map(p => `
       <div class="links">${p.github ? linkBtn(p.github, ghIcon, "View on GitHub", "btn-ghost") : (p.soon === "" ? "" : `<span class="soon">${p.soon || "GitHub repo coming soon"}</span>`)}</div>
     </div>
   </article>`).join("");
+
+// Gallery: crossfade through screenshots, pause on hover, click dots to jump
+document.querySelectorAll(".gallery").forEach(g => {
+  const imgs = [...g.querySelectorAll("img")], dots = [...g.querySelectorAll(".dots i")];
+  let i = 0, paused = false;
+  const show = n => { imgs[i].classList.remove("on"); dots[i].classList.remove("on"); i = (n + imgs.length) % imgs.length; imgs[i].classList.add("on"); dots[i].classList.add("on"); };
+  dots.forEach((d, n) => d.addEventListener("click", () => show(n)));
+  g.addEventListener("mouseenter", () => paused = true);
+  g.addEventListener("mouseleave", () => paused = false);
+  if (!reduce) setInterval(() => { if (!paused) show(i + 1); }, 3500);
+});
 
 // Copy email
 const copied = document.getElementById("copied");
