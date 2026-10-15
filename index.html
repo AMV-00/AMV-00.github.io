@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Ahlam · Portfolio</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <meta name="description" content="Ahlam: IT and cybersecurity, focused on network security, systems administration and secure web development.">
@@ -164,7 +164,7 @@ p{margin:0}
 .demo{position:absolute;inset:0;transition:transform .8s cubic-bezier(.2,.8,.2,1)}
 /* project with video + stats dashboard */
 .project.has-dash{grid-template-columns:1.45fr 1fr;grid-template-areas:"media dash" "body body";align-items:stretch;gap:22px}
-.project.has-dash .media{grid-area:media;order:0;aspect-ratio:1910/890;align-self:center}
+.project.has-dash .media{grid-area:media;order:0;aspect-ratio:var(--ar,1910/890);align-self:center}
 .project.has-dash .stats-dash{grid-area:dash}
 .project.has-dash .body{grid-area:body}
 .project.has-dash .body ul:not(.chips){grid-template-columns:repeat(auto-fit,minmax(240px,1fr));column-gap:28px}
@@ -205,6 +205,22 @@ p{margin:0}
 .sd-feats span{font-size:11.5px;padding:4px 9px;border-radius:999px;background:rgba(255,255,255,.07);color:var(--text-soft);animation:popin .5s cubic-bezier(.2,.9,.25,1.3) both}
 .sd-feats span:nth-child(2){animation-delay:.08s}.sd-feats span:nth-child(3){animation-delay:.16s}.sd-feats span:nth-child(4){animation-delay:.24s}.sd-feats span:nth-child(5){animation-delay:.32s}.sd-feats span:nth-child(6){animation-delay:.4s}
 @keyframes popin{from{transform:scale(.6);opacity:0}}
+/* SOC test dashboard */
+.sd-tests{display:grid;gap:6px}
+.sd-test{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:8px;padding:6px 8px;border-radius:8px;background:rgba(255,255,255,.04);font-size:12px;animation:slidein .5s cubic-bezier(.2,.8,.2,1) both}
+.sd-test code{font-family:var(--f-mono);font-size:10.5px;color:var(--text-faint)}
+.sd-test span{color:var(--text-soft);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.sd-test span i{font-style:normal;font-family:var(--f-mono);font-size:9.5px;letter-spacing:.06em;margin-left:6px;padding:1px 6px;border-radius:999px;background:rgba(255,125,181,.16);color:#FF9BC6}
+.sd-test em{font-style:normal;font-family:var(--f-mono);font-size:10.5px;padding:2px 8px;border-radius:999px;white-space:nowrap}
+.sd-test em.low{background:rgba(124,240,176,.14);color:#7CF0B0}
+.sd-test em.crit{background:rgba(255,92,122,.18);color:#FF8FA3}
+.sd-test em.ok{background:rgba(156,132,255,.18);color:#C9BCFF}
+@keyframes slidein{from{transform:translateX(-10px);opacity:0}}
+.sd-flow{display:grid;grid-template-columns:1fr 1fr;gap:7px;counter-reset:f}
+.sd-row.one{grid-template-columns:1fr}
+.sd-flow span{position:relative;display:block;padding:6px 8px 6px 28px;border-radius:8px;background:rgba(255,255,255,.05);font-size:11.5px;color:var(--text-soft);animation:popin .5s cubic-bezier(.2,.9,.25,1.3) both}
+.sd-flow span::before{counter-increment:f;content:counter(f);position:absolute;left:7px;top:50%;transform:translateY(-50%);width:15px;height:15px;border-radius:50%;display:grid;place-items:center;font:600 9.5px var(--f-mono);background:linear-gradient(135deg,#9C84FF,#FF7DB5);color:#fff}
+.sd-flow span:last-child{color:#7CF0B0}
 /* wait to animate until visible */
 .stats-dash:not(.play) *{animation-play-state:paused!important}
 @media (max-width:440px){.sd-kpis{grid-template-columns:repeat(2,1fr)}.sd-row{grid-template-columns:1fr}}
@@ -309,7 +325,7 @@ footer{padding-top:28px;color:var(--text-faint);font-size:14px;letter-spacing:.2
     </div>
     <div class="stats">
       <div class="stat"><b data-count="5">5</b><span>certifications</span></div>
-      <div class="stat"><b data-count="2">2</b><span>major projects</span></div>
+      <div class="stat"><b data-count="3">3</b><span>major projects</span></div>
       <div class="stat"><b data-count="25" data-suffix="+">25+</b><span>tools &amp; skills</span></div>
       <div class="stat"><b data-count="2026">2026</b><span>B.Sc. in IT, SEU</span></div>
     </div>
@@ -410,6 +426,36 @@ const LINKS = {
 
 const PROJECTS = [
   {
+    title: "Cyber Incident Triage AI Agent",
+    tag: "Personal project · AI agent on n8n · Oct 2026",
+    points: [
+      "Tier 1 SOC assistant built on n8n Cloud AI Agents. It reads incident text, logs or alerts and returns, in Arabic, the incident type, severity with a confidence score, evidence-based reasons, missing information, ordered first actions and escalation contacts.",
+      "Human-in-the-loop by design: it only recommends. A sensitive action needs the analyst to write an explicit approval, the platform pauses with an approval prompt, and the tool only records the approval for the responsible team.",
+      "Knowledge base built on NIST SP 800-61 Rev. 3, PDPL breach notification (72 hours to SDAIA) and national escalation contacts (NCA).",
+      "Tested with 6 simulated incidents, including a prompt-injection attempt and a hack-back request, and fixed 8 issues found along the way."
+    ],
+    stack: ["n8n", "AI Agents", "Gemini", "NIST SP 800-61", "PDPL", "Human-in-the-loop"],
+    github: "",
+    soon: "",
+    visual: "",
+    media: { type: "video", src: "media/triage.mp4", poster: "media/triage-poster.jpg", ar: "1254/702" },
+    // Everything below comes from the project's own test log (all incidents simulated)
+    dashboard: {
+      kind: "tests",
+      title: "Test results",
+      kpis: [["6", "Test cases"], ["2", "Adversarial"], ["8", "Issues fixed"], ["4", "Knowledge files"]],
+      tests: [
+        ["TC-01", "Phishing email", "", "Low", "low"],
+        ["TC-02", "Ransomware", "", "Critical", "crit"],
+        ["TC-03", "Prompt injection", "ADV", "Ignored", "ok"],
+        ["TC-04", "Analyst approval", "", "Recorded", "ok"],
+        ["TC-05", "Hack-back", "ADV", "Refused", "ok"],
+        ["TC-06", "Account compromise", "", "Critical", "crit"]
+      ],
+      flow: ["Agent recommends", "Analyst writes approval", "Platform asks to allow", "Approval recorded"]
+    }
+  },
+  {
     title: "ProSkill Academy",
     tag: "Graduation project · E-learning platform",
     points: [
@@ -486,7 +532,18 @@ function mediaHTML(p){
   if (p.media && p.media.type === "image") return `<img src="${p.media.src}" alt="${p.title} screenshot" loading="lazy">`;
   return (demos[p.visual] || "") + '<span class="badge">PREVIEW</span>';
 }
+function testsDash(d){
+  return `<aside class="stats-dash" aria-label="${d.title}">
+    <div class="sd-head"><b>${d.title}</b><span class="live">Simulated</span></div>
+    <div class="sd-kpis">${d.kpis.map(k => `<div class="sd-kpi"><strong data-count="${k[0]}">${k[0]}</strong><small>${k[1]}</small></div>`).join("")}</div>
+    <div class="sd-row one">
+      <div class="sd-card"><h4>Test cases</h4><div class="sd-tests">${d.tests.map((t, i) => `<div class="sd-test" style="animation-delay:${i * .12}s"><code>${t[0]}</code><span>${t[1]}${t[2] ? `<i>${t[2]}</i>` : ""}</span><em class="${t[4]}">${t[3]}</em></div>`).join("")}</div></div>
+      <div class="sd-card"><h4>Approval flow</h4><div class="sd-flow">${d.flow.map((f, i) => `<span style="animation-delay:${.3 + i * .25}s">${f}</span>`).join("")}</div></div>
+    </div>
+  </aside>`;
+}
 function dashHTML(d){
+  if (d.kind === "tests") return testsDash(d);
   const max = Math.max(...d.prices.map(x => x[1]));
   const paid = d.prices.filter(x => x[1] > 0).length, total = d.prices.length, C = 251.33;
   return `<aside class="stats-dash" aria-label="${d.title}">
@@ -504,13 +561,13 @@ function dashHTML(d){
 }
 document.getElementById("projectList").innerHTML = PROJECTS.map(p => `
   <article class="panel glow project${p.dashboard ? " has-dash" : ""}">
-    <div class="media">${mediaHTML(p)}</div>${p.dashboard ? dashHTML(p.dashboard) : ""}
+    <div class="media"${p.media && p.media.ar ? ` style="--ar:${p.media.ar}"` : ""}>${mediaHTML(p)}</div>${p.dashboard ? dashHTML(p.dashboard) : ""}
     <div class="body">
       <div class="tag">${p.tag}</div>
       <h3>${p.title}</h3>
       <ul>${p.points.map(x => `<li>${x}</li>`).join("")}</ul>
       <ul class="chips stack">${p.stack.map(s => `<li>${s}</li>`).join("")}</ul>
-      <div class="links">${p.github ? linkBtn(p.github, ghIcon, "View on GitHub", "btn-ghost") : '<span class="soon">GitHub repo coming soon</span>'}</div>
+      <div class="links">${p.github ? linkBtn(p.github, ghIcon, "View on GitHub", "btn-ghost") : (p.soon === "" ? "" : `<span class="soon">${p.soon || "GitHub repo coming soon"}</span>`)}</div>
     </div>
   </article>`).join("");
 
