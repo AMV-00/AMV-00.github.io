@@ -354,7 +354,7 @@ footer{padding-top:28px;color:var(--text-faint);font-size:14px;letter-spacing:.2
     </div>
     <div class="stats">
       <div class="stat"><b data-count="5">5</b><span>certifications</span></div>
-      <div class="stat"><b data-count="2">2</b><span>major projects</span></div>
+      <div class="stat"><b data-count="2">2</b><span>projects &amp; labs</span></div>
       <div class="stat"><b data-count="25" data-suffix="+">25+</b><span>tools &amp; skills</span></div>
       <div class="stat"><b data-count="2026">2026</b><span>B.Sc. in IT, SEU</span></div>
     </div>
@@ -456,35 +456,6 @@ const LINKS = {
 };
 
 const PROJECTS = [
-  {
-    title: "Cyber Incident Triage AI Agent",
-    tag: "Personal project · AI agent on n8n · Oct 2026",
-    points: [
-      "Tier 1 SOC assistant built on n8n Cloud AI Agents. It reads incident text, logs or alerts and returns, in Arabic, the incident type, severity with a confidence score, evidence-based reasons, missing information, ordered first actions and escalation contacts.",
-      "Human-in-the-loop by design: it only recommends. A sensitive action needs the analyst to write an explicit approval, the platform pauses with an approval prompt, and the tool only records the approval for the responsible team.",
-      "Knowledge base built on NIST SP 800-61 Rev. 3, PDPL breach notification (72 hours to SDAIA) and national escalation contacts (NCA).",
-      "Tested with 6 simulated incidents, including a prompt-injection attempt and a hack-back request, and fixed 8 issues found along the way."
-    ],
-    stack: ["n8n", "AI Agents", "Gemini", "NIST SP 800-61", "PDPL", "Human-in-the-loop"],
-    github: "https://github.com/AMV-00/cyber-incident-triage-agent",
-    visual: "",
-    media: { type: "video", src: "media/triage.mp4", poster: "media/triage-poster.jpg", ar: "1254/702" },
-    // Everything below comes from the project's own test log (all incidents simulated)
-    dashboard: {
-      kind: "tests",
-      title: "Test results",
-      kpis: [["6", "Test cases"], ["2", "Adversarial"], ["8", "Issues fixed"], ["4", "Knowledge files"]],
-      tests: [
-        ["TC-01", "Phishing email", "", "Low", "low"],
-        ["TC-02", "Ransomware", "", "Critical", "crit"],
-        ["TC-03", "Prompt injection", "ADV", "Ignored", "ok"],
-        ["TC-04", "Analyst approval", "", "Recorded", "ok"],
-        ["TC-05", "Hack-back", "ADV", "Refused", "ok"],
-        ["TC-06", "Account compromise", "", "Critical", "crit"]
-      ],
-      flow: ["Agent recommends", "Analyst writes approval", "Platform asks to allow", "Approval recorded"]
-    }
-  },
   {
     title: "ProSkill Academy",
     tag: "Graduation project · E-learning platform",
